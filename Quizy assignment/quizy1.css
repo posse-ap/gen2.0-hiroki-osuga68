@@ -1,9 +1,13 @@
-body {line-height: 220%;}
+p{
+    line-height: 50%;
+}
+
+
 
 span{
     background:linear-gradient(transparent 60%, #ff6 60%);
     font-weight: bold;
-    font-size: 20px;
+    font-size: 20px; 
 }
 .choices-center{
     text-align: center;
@@ -36,7 +40,13 @@ button{
 
 .list-arrange{
     list-style-type: none;
-    text-align: center;
+     text-align: center;  /*この方法以外での中央寄せはできないか */
+    
+     
+    
+
+
+    
     
 }
 .choices-arrange{
@@ -48,6 +58,7 @@ button{
     margin: 10px;
     border-collapse: separate;
     border-spacing: 10px;
+    
     margin-left: auto; /* 中央寄せにするため */
 	margin-right: auto; /* 中央寄せにするため */
 }
@@ -56,12 +67,28 @@ button{
     background-color: deepskyblue;
 }
 
+
 #result-area{
     text-align: center;
 }
+
+.result-border{
+    font-weight: bold;
+    border: 1px groove;
+    width: 600px; 
+    height: 80px;
+    border-color:gainsboro;
+     margin: 10px; 
+    border-collapse: separate;
+    border-spacing: 10px;
+    margin-left: auto; /* 中央寄せにするため */
+	margin-right: auto; /* 中央寄せにするため */
+}
+
 .underline{
-    
+    display: inline-block;
     background:linear-gradient(transparent 60%, rgb(102, 245, 255) 60%);
+
 }
 
 .underline2{
@@ -75,3 +102,6 @@ button{
 .cannot-click{
     pointer-events: none;
 }
+
+
+
