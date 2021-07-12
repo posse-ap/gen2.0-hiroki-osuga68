@@ -2,7 +2,12 @@ p{
     line-height: 50%;
 }
 
-
+ul{
+    margin:0;
+    padding:0;
+    border: 0;
+    outline: 0;
+}
 
 span{
     background:linear-gradient(transparent 60%, #ff6 60%);
@@ -40,7 +45,7 @@ button{
 
 .list-arrange{
     list-style-type: none;
-     text-align: center;  /*この方法以外での中央寄せはできないか */
+     text-align: center; 
     
      
     
@@ -96,7 +101,7 @@ button{
     background:linear-gradient(transparent 60%, rgb(255, 102, 102) 60%);
 }
 .background-color2{
-    background-color: gray;
+    background-color:#E55204;
 }
 
 .cannot-click{
