@@ -88,8 +88,41 @@ buttonFalse2.onclick = function (){
 
 
     
+/**
+ * <h1><span>1.この地名はなんて読む？</span></h1>
+
+<p id="kuizy-font" class="choices-center" >kuizy</p>
+<p id="question" class="choices-center" >高輪</p>
+<p id="small-article" class="choices-center" >#東京の難読地名クイズ</p>
+
+<ul class="list-arrange"> 
+     <li > <button type="button" class="choices-arrange" id="1-choice1">たかなわ</button></li>
+
+     <li > <button type="button" class="choices-arrange" id="1-choice2">たかわ</button></li>
+        
+     <li > <button type="button" class="choices-arrange" id="1-choice3">こうわ</button></li>
+    
+</ul>
+
+<div id ="result-area" ></div>*/
+
+
+const allQuestions =[
+    '高輪',
+    '亀戸',
+    '麹町',
+    '御成門',
+    '等々力',
+    '石神井',
+    '雑色',
+    '御徒町',
+    '鹿骨',
+    '小榑',
+];
 
 
 
-
-
+for(let i = 0; i <allQuestions.length; i++){
+ const eachQuestion = document.getElementById('question');
+ eachQuestion.innerHTML = allQuestions[1];
+}
