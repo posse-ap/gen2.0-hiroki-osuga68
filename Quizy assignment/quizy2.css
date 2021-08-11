@@ -14,7 +14,7 @@ span{
     font-weight: bold;
     font-size: 20px; 
 }
-.choices-center{
+.words-center{
     text-align: center;
 }
 
@@ -62,7 +62,11 @@ button{
 	margin-right: auto; /* 中央寄せにするため */
 }
 
-.background-color{
+.answer-color{
+    color: white;
+    background-color: deepskyblue;
+}
+/* .background-color{ */
     background-color: deepskyblue;
 }
 
@@ -87,12 +91,14 @@ button{
 .underline{
     display: inline-block;
     background:linear-gradient(transparent 60%, rgb(102, 245, 255) 60%);
+    
 
 }
 
 .underline2{
     
     background:linear-gradient(transparent 60%, rgb(255, 102, 102) 60%);
+    
 }
 .background-color2{
     background-color:#E55204;
@@ -101,6 +107,3 @@ button{
 .cannot-click{
     pointer-events: none;
 }
-
-
-

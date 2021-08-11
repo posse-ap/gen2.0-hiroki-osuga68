@@ -1,7 +1,35 @@
+/*for (let number= 0; number < 10; number++){
+    let quizyContents=
+
++'<h1><span>'+(number+1)+'.この地名はなんて読む？</span></h1>'
+    +'<p id="kuizy-font" class="choices-center" >kuizy</p>'
+    
+       
+        +'<p id="small-article" class="choices-center" >#東京の難読地名クイズ</p>'
+    
+    +'<div id = "question-area1">'+allQuestions[number]+'</div>'
+    +'<ul class="list-arrange" id ='+(number+1)+'"choices-area1">'
+         +'<li id = "1-choices-area1"> <button type="button" class="choices-arrange" id='+(number+1)+'"-choice1">'+AllChoices[number][0]+'</button></li>'
+         +'<li id = "1-choices-area2"> <button type="button" class="choices-arrange" id='+(number+1)+'"-choice2">'+AllChoices[number][1]+'</button></li>'
+         +'<li id = "1-choices-area3"> <button type="button" class="choices-arrange" id='+(number+1)+'"-choice3">'+AllChoices[number][2]+'</button></li>'
+
+    +'</ul>';
+    
+    document.currentScript.insertAdjacentHTML('beforebegin', quizyContents);
+};
+*/
+
+
+
+
+
+
+
 let buttonTrue = document.getElementById("1-choice1");
 let buttonFalse1 = document.getElementById('1-choice2');
 let buttonFalse2 = document.getElementById('1-choice3');
 let resultDivided = document.getElementById('result-area');
+
 
 
 //正解の時の結果...こちらはaddEventListenerでイベント指定してみた
@@ -87,25 +115,7 @@ buttonFalse2.onclick = function (){
 }
 
 
-    
-/**
- * <h1><span>1.この地名はなんて読む？</span></h1>
-
-<p id="kuizy-font" class="choices-center" >kuizy</p>
-<p id="question" class="choices-center" >高輪</p>
-<p id="small-article" class="choices-center" >#東京の難読地名クイズ</p>
-
-<ul class="list-arrange"> 
-     <li > <button type="button" class="choices-arrange" id="1-choice1">たかなわ</button></li>
-
-     <li > <button type="button" class="choices-arrange" id="1-choice2">たかわ</button></li>
-        
-     <li > <button type="button" class="choices-arrange" id="1-choice3">こうわ</button></li>
-    
-</ul>
-
-<div id ="result-area" ></div>*/
-
+//jsでのhtml生成
 
 const allQuestions =[
     '高輪',
@@ -120,9 +130,71 @@ const allQuestions =[
     '小榑',
 ];
 
+const allChoices =[
+    ['たかわ','こうわ','たかなわ',2],
+    ['かめど','かめいど','かめど',1],
+    ['こうじまち','おかとまち','かゆまち',0],
+    ['おかどもん','おなりもん','ごせいもん',1],
+    ['たたら','とどろき','たたりき',1],
+    ['しゃくじい','いじい','せきこうい',0],
+    ['ざっしょく','ざっしき','ぞうしき',2],
+    ['おかちまち','ごしろちょう','みとちょう',0],
+    ['ししぼね','しこね','ろっこつ',0],
+    ['こしゃく','こぐれ','こばく',1],
+];
 
+
+
+function makingQuestions (i){
+    let questionAreas = document.getElementById("question-area" + (i+1));
+    let newQuestions = document.createElement("p");
+    newQuestions.className = "allQuestions";
+    newQuestions.innerHTML = allQuestions[i];
+    questionAreas.appendChild(newQuestions);
+
+};
 
 for(let i = 0; i <allQuestions.length; i++){
- const eachQuestion = document.getElementById('question');
- eachQuestion.innerHTML = allQuestions[1];
+   makingQuestions(i);
+};
+
+function makingChoices (i){
+    let choicesAreas_1 = document.getElementById((i+1) + "-choices-area1");
+    let choicesAreas_2 = document.getElementById((i+1) + "-choices-area2");
+    let choicesAreas_3 = document.getElementById((i+1) + "-choices-area3");
+    let newChoices_1 = document.createElement("button");
+    let newChoices_2 = document.createElement("button");
+    let newChoices_3 = document.createElement("button");
+    newChoices_1.className = "choices-arrange";
+    newChoices_2.className = "choices-arrange";
+    newChoices_3.className = "choices-arrange";
+    newChoices_1.id = "(i+1) + -choices +1)";
+    newChoices_2.id = "(i+1) + -choices +2)";
+    newChoices_3.id = "(i+1) + -choices +3)";
+    newChoices_1.innerHTML = allChoices[i][0];
+    newChoices_2.innerHTML = allChoices[i][1];
+    newChoices_3.innerHTML = allChoices[i][2];
+    
+
+    choicesAreas_1.appendChild(newChoices_1);
+    choicesAreas_2.appendChild(newChoices_2);
+    choicesAreas_3.appendChild(newChoices_3);
+};
+
+for(let i = 0; i<allChoices.length; i++){
+    makingChoices(i);
+};
+   
+/*const array_10 =[];
+for (let i = 1; i <= 10; i++){
+    array_10.push(document.getElementById("question-" + i));
 }
+console.log(array_10);*/
+
+ 
+
+
+
+
+
+
