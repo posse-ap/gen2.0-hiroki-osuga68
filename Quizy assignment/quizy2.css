@@ -66,8 +66,10 @@ button{
     color: white;
     background-color: deepskyblue;
 }
-/* .background-color{ */
-    background-color: deepskyblue;
+
+.false-color{
+    color: white;
+    background-color:#E55204;
 }
 
 
@@ -99,9 +101,6 @@ button{
     
     background:linear-gradient(transparent 60%, rgb(255, 102, 102) 60%);
     
-}
-.background-color2{
-    background-color:#E55204;
 }
 
 .cannot-click{

@@ -8,10 +8,10 @@
         +'<p id="small-article" class="choices-center" >#東京の難読地名クイズ</p>'
     
     +'<div id = "question-area1">'+allQuestions[number]+'</div>'
-    +'<ul class="list-arrange" id ='+(number+1)+'"choices-area1">'
-         +'<li id = "1-choices-area1"> <button type="button" class="choices-arrange" id='+(number+1)+'"-choice1">'+AllChoices[number][0]+'</button></li>'
-         +'<li id = "1-choices-area2"> <button type="button" class="choices-arrange" id='+(number+1)+'"-choice2">'+AllChoices[number][1]+'</button></li>'
-         +'<li id = "1-choices-area3"> <button type="button" class="choices-arrange" id='+(number+1)+'"-choice3">'+AllChoices[number][2]+'</button></li>'
+    +'<ul class="list-arrayange" id ='+(number+1)+'"choices-area1">'
+         +'<li id = "1-choices-area1"> <button type="button" class="choices-arrayange" id='+(number+1)+'"-choice1">'+AllChoices[number][0]+'</button></li>'
+         +'<li id = "1-choices-area2"> <button type="button" class="choices-arrayange" id='+(number+1)+'"-choice2">'+AllChoices[number][1]+'</button></li>'
+         +'<li id = "1-choices-area3"> <button type="button" class="choices-arrayange" id='+(number+1)+'"-choice3">'+AllChoices[number][2]+'</button></li>'
 
     +'</ul>';
     
@@ -165,9 +165,9 @@ function makingChoices (i){
     let newChoices_1 = document.createElement("button");
     let newChoices_2 = document.createElement("button");
     let newChoices_3 = document.createElement("button");
-    newChoices_1.className = "choices-arrange";
-    newChoices_2.className = "choices-arrange";
-    newChoices_3.className = "choices-arrange";
+    newChoices_1.className = "choices-arrayange";
+    newChoices_2.className = "choices-arrayange";
+    newChoices_3.className = "choices-arrayange";
     newChoices_1.id = "(i+1) + -choices +1)";
     newChoices_2.id = "(i+1) + -choices +2)";
     newChoices_3.id = "(i+1) + -choices +3)";
@@ -185,11 +185,11 @@ for(let i = 0; i<allChoices.length; i++){
     makingChoices(i);
 };
    
-/*const array_10 =[];
+/*const arrayay_10 =[];
 for (let i = 1; i <= 10; i++){
-    array_10.push(document.getElementById("question-" + i));
+    arrayay_10.push(document.getElementById("question-" + i));
 }
-console.log(array_10);*/
+console.log(arrayay_10);*/
 
  
 
