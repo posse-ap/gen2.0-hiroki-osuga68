@@ -11,7 +11,7 @@ const allQuestions =[
     '小榑',
 ];
 
-const allChoices =[
+/*const allChoices =[
     ['たかなわ','たかわ','こうわ'],
     ['かめいど','かめと','かめど'],
     ['こうじまち','おかとまち','かゆまち'],
@@ -22,31 +22,38 @@ const allChoices =[
     ['おかちまち','ごしろちょう','みとちょう'],
     ['ししぼね','しこね','ろっこつ'],
     ['こぐれ','こしゃく','こばく'],
-];
+];*/
+const allChoices = [
+    {c: ['たかなわ', 'たかわ', 'こうわ']},
+    {c: ['かめいど', 'かめど', 'かめど']},
+    {c: ['こうじまち', 'おかじまち', 'かゆまち']},
+    {c: ['おなりもん', 'おかどまち', 'ごせいもん']},
+    {c: ['とどろき', 'たたら', 'たたりき']},
+    {c: ['しゃくじい', 'いじい', 'せきこうい']},
+    {c: ['ぞうしき', 'ざっしょく', 'ざっしき']},
+    {c: ['おかちまち','ごしろちょう','みとちょう']},
+    {c: ['ししぼね','しこね','ろっこつ']},
+    {c: ['こぐれ','こしゃく','こばく']},
+  ];
 
-const shuffledAllChoices = allChoices;
-console.log(shuffledAllChoices);
-shuffledAllChoices.map(shuffle);
+const randomNumber = ['0', '1', '2'];
 
-for (let number = 0; number < allQuestions.length; number++){
-    let quizyContents=
+  for(currentNum = 0; currentNum < 10; currentNum++){
 
-     `<h2><span>${number+1}.この地名はなんて読む？</span></h2>`
-    +'<p id="kuizy-font" class="words-center">kuizy</p>'
-    
-       
-        +'<p id="small-article" class="words-center">#東京の難読地名クイズ</p>'
-    
-    +'<div id ="question-area1" class="allQuestions">'+allQuestions[number]+'</div>'
-        +'<ul class="list-arrange">'
-            +`<li><button onclick="makingTrueAnswerBox(${number})" class="choices-arrange" id="${number+1}-choice1">${allChoices[number][0]}</button></li>`
-            +`<li><button onclick="makingFalse1AnswerBox(${number})" class="choices-arrange" id="${number+1}-choice2">${allChoices[number][1]}</button></li>`
-            +`<li><button onclick="makingFalse2AnswerBox(${number})" class="choices-arrange" id="${number+1}-choice3">${allChoices[number][2]}</button></li>`
-        +'</ul>'
-    +`<div id ="result-area${number+1}"></div>`;
-    
-    document.currentScript.insertAdjacentHTML('beforebegin', quizyContents);
-};
+  //let shuffledAllChoices =shuffle([...allChoices[currentNum].c]);
+  
+ 
+//console.log("元の配列", allChoices);
+
+//let shuffledAllChoices = [...allChoices];
+//let shuffledAllChoices =Object.assign(allChoices);
+//let shuffledAllChoices =allChoices.slice();
+ //shuffledAllChoices[0][0] = "hoge";
+//console.log("コピーした配列", shuffledAllChoices[0])
+;};
+//shuffledAllChoices.map(shuffle);
+
+
 
 //シャッフル関数
 function shuffle(arr) {
@@ -54,25 +61,60 @@ function shuffle(arr) {
       const j = Math.floor(Math.random() * (i + 1));  // j = 範囲内から選ぶランダム変数
       [arr[j], arr[i]] = [arr[i], arr[j]]; // 分割代入 i と j を入れ替える
     }
-    console.log(arr);
+    //console.log(arr);
     return arr;
   };
-  console.log(allChoices);
 
-  //const shuffledChoices = shuffle([...allChoices]);
 
+
+for (let number = 0; number < allQuestions.length; number++){
+  //shuffle(randomNumber);
+  //console.log(randomNumber);
+  let quizyContents =
+  
+  `<h2><span>${number+1}.この地名はなんて読む？</span></h2>`
+  +'<p id="kuizy-font" class="words-center">kuizy</p>'
+  
+  
+  +'<p id="small-article" class="words-center">#東京の難読地名クイズ</p>'
+  
+  +'<div id ="question-area1" class="allQuestions">'+allQuestions[number]+'</div>'
+  +'<ul class="list-arrange">'
+  
+  shuffle(randomNumber);
+        randomNumber.forEach(function (element){
+          console.log(element);
+          quizyContents = quizyContents +`<li><button onclick="makingTrueAnswerBox(${number}, ${element})" class="choices-arrange" id="${number+1}-choice${element}">${allChoices[number].c[element]}</button></li>`
+        });  
+quizyContents = quizyContents 
+  +'</ul>'
+  +`<div id ="result-area${number+1}"></div>`;
+    
+    document.currentScript.insertAdjacentHTML('beforebegin', quizyContents);
+};
+
+              
   
 //正解の時の結果
- function makingTrueAnswerBox(eachNumber){
-    if(allChoices[eachNumber] == allChoices[eachNumber][0]){
+
+ function makingTrueAnswerBox(eachNumber, random){
+   
+   
     let resultDivided = document.getElementById("result-area"+(eachNumber+1));
-    let buttonTrue = document.getElementById((eachNumber+1)+"-choice1");
-    let buttonFalse1 = document.getElementById((eachNumber+1)+"-choice2");
-    let buttonFalse2 = document.getElementById((eachNumber+1)+"-choice3");
-    console.log(buttonTrue);
-    buttonTrue.classList.add('answer-color');
-    //allChoices[eachNumber][0].id = document.getElementById((eachNumber+1)+"-choice1");
-    //console.log(allChoices[eachNumber][0]);
+    //let buttonTrue = document.getElementById(`${eachNumber+1}-choice${random}`);
+    let buttonTrueFalse = document.getElementById((eachNumber+1)+"-choice"+random);
+    let buttonTrue = document.getElementById((eachNumber+1)+"-choice0");
+    let buttonFalse1 = document.getElementById((eachNumber+1)+"-choice1");
+    let buttonFalse2 = document.getElementById((eachNumber+1)+"-choice2");
+    
+    console.log(resultDivided);
+    //console.log("ボタンを押したときに取得できるid", `${eachNumber+1}-choice${random}`);
+    console.log("ボタンを押したときに取得できるid", (eachNumber+1)+"-choice"+random);
+    console.log(buttonTrueFalse);
+
+    if(random==0){
+    buttonTrueFalse.classList.add('answer-color');
+  
     //正解エリアの作成 
  
     let popUpTrue = document.createElement('p');
@@ -82,29 +124,19 @@ function shuffle(arr) {
  
      let trueExplain = document.createElement('p');
      trueExplain.className = "words-center";
-     trueExplain.innerText = `正解は${allChoices[eachNumber][0]}です`;
+     trueExplain.innerText = `正解は${allChoices[eachNumber].c[0]}です`;
      resultDivided.appendChild(trueExplain);
  
      resultDivided.classList.add('result-border');
      
  
+     buttonTrueFalse.classList.add("cannot-click");
      buttonTrue.classList.add("cannot-click");
      buttonFalse1.classList.add("cannot-click");
      buttonFalse2.classList.add("cannot-click");
-    }
-     
- };
- 
- //不正解の時の結果１
-function makingFalse1AnswerBox(eachNumber){
-    let resultDivided = document.getElementById("result-area"+(eachNumber+1));
-    let buttonTrue = document.getElementById((eachNumber+1)+"-choice1");
-    let buttonFalse1 = document.getElementById((eachNumber+1)+"-choice2");
-    let buttonFalse2 = document.getElementById((eachNumber+1)+"-choice3");
-    buttonTrue.classList.add('answer-color');
-    
-    buttonFalse1.classList.add('false-color');
-   
+    }else{
+      buttonTrueFalse.classList.add('false-color');
+
     //不正解エリアの作成１
    
     let failure1 = document.createElement('span');
@@ -113,46 +145,19 @@ function makingFalse1AnswerBox(eachNumber){
     resultDivided.appendChild(failure1);
 
     let trueExplain = document.createElement('p');
-    trueExplain.innerText = `正解は${allChoices[eachNumber][0]}です`;
+    trueExplain.className ="words-center";
+    trueExplain.innerText = `正解は${allChoices[eachNumber].c[0]}です`;
     resultDivided.appendChild(trueExplain);
 
     resultDivided.classList.add('result-border');
     
+    buttonTrueFalse.classList.add("cannot-click");
     buttonTrue.classList.add("cannot-click");
     buttonFalse1.classList.add("cannot-click");
     buttonFalse2.classList.add("cannot-click");
-    
-};
 
- //不正解の時の結果2
- function makingFalse2AnswerBox(eachNumber){
-    let resultDivided = document.getElementById("result-area"+(eachNumber+1));
-    let buttonTrue = document.getElementById((eachNumber+1)+"-choice1");
-    let buttonFalse1 = document.getElementById((eachNumber+1)+"-choice2");
-    let buttonFalse2 = document.getElementById((eachNumber+1)+"-choice3");
-    buttonTrue.classList.add('answer-color');
-    
-    buttonFalse2.classList.add('false-color');
-   
-    //不正解エリアの作成2
-   
-    let failure1 = document.createElement('span');
-    failure1.className = 'underline2';
-    failure1.innerText = '不正解（泣）';
-    resultDivided.appendChild(failure1);
-
-    let trueExplain = document.createElement('p');
-    trueExplain.innerText = `正解は${allChoices[eachNumber][0]}です`;
-    resultDivided.appendChild(trueExplain);
-
-    resultDivided.classList.add('result-border');
-    
-    buttonTrue.classList.add("cannot-click");
-    buttonFalse1.classList.add("cannot-click");
-    buttonFalse2.classList.add("cannot-click");
-    
-};
-
-//let buttonsFalse = document.getElementsByClassName((eachNumber+1)+"-choice_false");
-    //buttonsFalse = array.from(buttonsFalse);
-    //buttonsFalse.forEach(function(element){console.log(element);});
+    }
+       
+ };
+ 
+ 

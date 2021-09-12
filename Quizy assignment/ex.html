@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="quizy2.css">
 </head>
 <body>
 
@@ -12,7 +13,7 @@
     <div id = "hoge"></div>
     <div id = "piyo"></div>
     <p id="question"></p>
-    <ul id="choices"></ul>
+    
 
     <script>
 const allQuestions =[
@@ -40,10 +41,31 @@ const allChoices = [
     {c: ['こぐれ','こしゃく','こばく']},
   ];
 
-{
+  for (let number = 0; number < allQuestions.length; number++){
+    let quizyContents =
+
+     `<h2><span>${number+1}.この地名はなんて読む？</span></h2>`
+    +'<p id="kuizy-font" class="words-center">kuizy</p>'
+    
+       
+        +'<p id="small-article" class="words-center">#東京の難読地名クイズ</p>'
+    
+    +'<div id ="question-area1" class="allQuestions">'+allQuestions[number]+'</div>'
+        +`<ul id= choices${number} class="list-arrange">`
+            // +`<li><button onclick="makingTrueAnswerBox(${number})" class="choices-arrange" id="${number+1}-choice1">${allChoices[number].c}</button></li>`
+            // +`<li><button onclick="makingFalse1AnswerBox(${number})" class="choices-arrange" id="${number+1}-choice2">${allChoices[number][1]}</button></li>`
+            // +`<li><button onclick="makingFalse2AnswerBox(${number})" class="choices-arrange" id="${number+1}-choice3">${allChoices[number][2]}</button></li>`
+        +'</ul>'
+    +`<div id ="result-area${number+1}"></div>`;
+    
+    document.currentScript.insertAdjacentHTML('beforebegin', quizyContents);
+};
+
+
+
   const question = document.getElementById('question');
   const btn = document.getElementById('btn');
-  const choices = document.getElementById('choices');
+  //const choices = document.getElementById('choices');
 
  
 
@@ -59,17 +81,34 @@ const allChoices = [
     }
     return array;
   }
-for(currentNum=0; currentNum<10; currentNum++){
+  function setQuiz(currentNum){
+  console.log(allChoices[currentNum].c[0]);
+  const choices = document.getElementById('choices'+(currentNum));
   const shuffledChoices = shuffle([...allChoices[currentNum].c]);
   console.log(allChoices[currentNum].c);
   shuffledChoices.forEach(choice => {
     const li = document.createElement('li');
+    li.className = ('choices-arrange');
     li.textContent = choice;
     console.log(choice);
+    
+    li.addEventListener('click',function checkAnswer(li) {
+    if (li.textContent === allChoices[currentNum].c[0]) {
+      console.log('correct');
+    } else {
+      console.log('wrong');
+      console.log(allChoices[currentNum].c[0]);
+    }
+  });
     choices.appendChild(li);
   });
-}
-}
+ };
+
+for(currentNum=0; currentNum<10; currentNum++){
+  setQuiz(currentNum);
+};
+
+
     function plus1(a, b, id){
         document.getElementById(id).innerHTML = a + b;
         return a + b;
