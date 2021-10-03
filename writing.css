@@ -1,0 +1,119 @@
+p{
+    line-height: 50%;
+}
+
+ul{
+    margin:0;
+    padding:0;
+    border: 0;
+    outline: 0;
+}
+
+span{
+    background:linear-gradient(transparent 60%, #ff6 60%);
+    font-weight: bold;
+    font-size: 20px; 
+}
+.words-center{
+    text-align: center;
+}
+
+#kuizy-font{
+    color:#48d8eb;
+    font-size: 40px;
+    font-family:'MS Sans Serif';
+
+}
+
+.allQuestions{
+    font-weight: bold;
+    font-size: 120px; 
+    text-align: center; 
+}
+
+#small-article{
+    font-size: 30px;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
+
+.list-arrange{
+    list-style-type: none;
+     text-align: center;   
+}
+.choices-arrange{
+    font-weight: bold;
+    border: 1px groove;
+    width: 600px; 
+    height: 40px;
+    border-color:gainsboro;
+    margin: 10px;
+    border-collapse: separate;
+    border-spacing: 10px;
+    
+    margin-left: auto; /* 中央寄せにするため */
+	margin-right: auto; /* 中央寄せにするため */
+}
+
+.answer-color{
+    color: white;
+    background-color: deepskyblue;
+}
+
+.false-color{
+    color: white;
+    background-color:#E55204;
+}
+
+
+#result-area{
+    text-align: center;
+}
+
+.result-border{
+    font-weight: bold;
+    border: 1px groove;
+    width: 600px; 
+    height: 80px;
+    border-color:gainsboro;
+     margin: 10px; 
+    border-collapse: separate;
+    border-spacing: 10px;
+    margin-left: auto; /* 中央寄せにするため */
+	margin-right: auto; /* 中央寄せにするため */
+}
+
+.underline{
+    display: inline-block;
+    background:linear-gradient(transparent 60%, rgb(102, 245, 255) 60%);
+    
+
+}
+
+.underline2{
+    
+    background:linear-gradient(transparent 60%, rgb(255, 102, 102) 60%);
+    
+}
+
+.cannot-click{
+    pointer-events: none;
+}
+
+.button {
+    padding:15px 20px 15px 20px ;
+    margin: 50px auto;
+    height: 30px;
+    background-color: skyblue;
+    border: 3px solid navy;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+}
