@@ -65,24 +65,6 @@ li.wrong{
     font-weight: bold;
 }
 
-
-.answer-color{
-    color: white;
-    background-color: deepskyblue;
-}
-
-.false-color{
-    color: white;
-    background-color:#E55204;
-}
-
-
-#result-area{
-    text-align: center;
-}
-.result_box{
-    text-align: center;
-}
 .result-border{
     font-weight: bold;
     border: 1px groove;
@@ -101,8 +83,6 @@ li.wrong{
     display: inline-block;
     background:linear-gradient(transparent 60%, rgb(102, 245, 255) 60%);
     line-height: 1!important;
-    
-
 }
 
 .underline2{
@@ -111,19 +91,5 @@ li.wrong{
     line-height: 1!important;
 }
 
-.cannot-click{
-    pointer-events: none;
-}
-
-.button {
-    padding:15px 20px 15px 20px ;
-    margin: 50px auto;
-    height: 30px;
-    background-color: skyblue;
-    border: 3px solid navy;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: left;
-}
 
 
