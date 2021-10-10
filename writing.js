@@ -1,3 +1,5 @@
+/* 配列の作り方とhtml出力の方法は以前のやつベース、不必要なクラスやidはなるべく削った。
+html生成は選択肢の部分で大幅に変更、それに伴い選択肢のクリックイベントも変更。*/
 
 const allQuestions =[
     '高輪',
@@ -13,7 +15,7 @@ const allQuestions =[
 ];
 const allChoices = [
     {c: ['たかなわ', 'たかわ', 'こうわ']},
-    {c: ['かめいど', 'かめど', 'かめど']},
+    {c: ['かめいど', 'かめど', 'かめと']},
     {c: ['こうじまち', 'おかじまち', 'かゆまち']},
     {c: ['おなりもん', 'おかどまち', 'ごせいもん']},
     {c: ['とどろき', 'たたら', 'たたりき']},
@@ -27,35 +29,20 @@ const allChoices = [
   for (let number = 0; number < allQuestions.length; number++){
     let quizyContents =
 
-     `<h2><span>${number+1}.この地名はなんて読む？</span></h2>`
-    +'<p id="kuizy-font" class="words-center">kuizy</p>'
+     `<h2 class="outline"><span>${number+1}.この地名はなんて読む？</span></h2>`
+    +'<p class="kuizy-font">kuizy</p>'
     
        
-        +'<p id="small-article" class="words-center">#東京の難読地名クイズ</p>'
+        +'<p class="small-article">#東京の難読地名クイズ</p>'
     
     +'<div id ="question-area1" class="allQuestions">'+allQuestions[number]+'</div>'
         +`<ul id= choices${number} class="list-arrange">`
-            // +`<li><button onclick="makingTrueAnswerBox(${number})" class="choices-arrange" id="${number+1}-choice1">${allChoices[number].c}</button></li>`
-            // +`<li><button onclick="makingFalse1AnswerBox(${number})" class="choices-arrange" id="${number+1}-choice2">${allChoices[number][1]}</button></li>`
-            // +`<li><button onclick="makingFalse2AnswerBox(${number})" class="choices-arrange" id="${number+1}-choice3">${allChoices[number][2]}</button></li>`
+          // liタグ（選択肢３つ）を下記の関数で生成していく
         +'</ul>'
     +`<div id ="result-area${number+1}"></div>`;
     
-    document.currentScript.insertAdjacentHTML('beforebegin', quizyContents);
+    document.getElementById('main').insertAdjacentHTML('beforeend', quizyContents);
 };
-
-
-
-  const question = document.getElementById('question');
-  const btn = document.getElementById('btn');
-  //const choices = document.getElementById('choices');
-
- 
-
-   
- // let currentNum = 0;
-
-  //question.textContent = allChoices[currentNum].q;
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -64,59 +51,61 @@ const allChoices = [
     }
     return array;
   }
+
+  // 関数setQuizでは選択肢を生成し、その選択肢が押された後のイベント処理を行い、最後に親要素を基に選択肢を追加する
   function setQuiz(currentNum){
-  console.log(allChoices[currentNum].c[0]);
+  // 選択肢の生成
   const choices = document.getElementById('choices'+(currentNum));
   const shuffledChoices = shuffle([...allChoices[currentNum].c]);
-//   console.log(allChoices[currentNum].c);
   shuffledChoices.forEach(choice => {
     const li = document.createElement('li');
     li.className = ('choices-arrange');
     li.textContent = choice;
-    console.log(choice);
-    
-    li.addEventListener('click',function checkAnswer(li) {
-    if (li.textContent === allChoices[currentNum].c[0]) {
-      console.log('correct');
+
+    // 正誤判定と正解エリアの作成
+    li.addEventListener('click',function checkAnswer() {
+    //↓正解エリアをポップアップさせる場所のid取得
+    let resultDivided = document.getElementById("result-area"+(currentNum+1));
+    // 正解時、不正解時で場合分け
+    if (choice === allChoices[currentNum].c[0]) {
+      // console.log('correct');
+      li.classList.add('correct');
+    　let popUpTrue = document.createElement('p');
+    　popUpTrue.classList.add("underline");
+    　popUpTrue.innerText = '正解！';
+     resultDivided.appendChild(popUpTrue);
+ 
+     let trueExplain = document.createElement('p');
+     trueExplain.innerText = `正解は${allChoices[currentNum].c[0]}です`;
+     resultDivided.appendChild(trueExplain);
+     resultDivided.classList.add('result-border');
     } else {
-      console.log('wrong');
-      console.log(allChoices[currentNum].c[0]);
+      // console.log('wrong');
+      li.classList.add('wrong');
+    　let popUpTrue = document.createElement('p');
+    　popUpTrue.classList.add("underline2");
+    　popUpTrue.innerText = '不正解…';
+     resultDivided.appendChild(popUpTrue);
+ 
+     let trueExplain = document.createElement('p');
+     trueExplain.innerText = `正解は${allChoices[currentNum].c[0]}です`;
+     resultDivided.appendChild(trueExplain);
+     resultDivided.classList.add('result-border');
     }
+    choices.style.pointerEvents = 'none';
   });
+  // 生成した選択肢を親要素choices下に追加
     choices.appendChild(li);
   });
  };
 
 for(currentNum=0; currentNum<10; currentNum++){
+  // 10回分、関数setQuizを呼び出す。
   setQuiz(currentNum);
 };
 
 
-    // function plus1(a, b, id){
-    //     document.getElementById(id).innerHTML = a + b;
-    //     return a + b;
-    // }
-    // plus1(3,4,"hoge");
-       
-     /*function plus(a, b){
-        // document.getElementById(id).innerHTML = a + b;
-        return a + b;
-        
-    }
-    function elementInId(id, element){
-        document.getElementById(id).innerHTML = element;
-    }
-    function trapezoid_area (upper, lower, height){
-        let area = plus(upper, lower)*height/2;
-        return area;
-    }
-    elementInId("hoge", trapezoid_area(3, 2, 4));
-    elementInId("piyo", plus(8, 3));*/
-
     
-    
-    
-   // plus(3, 5, "hoge");
 
    
     
