@@ -104,7 +104,7 @@ for(currentNum=0; currentNum<10; currentNum++){
   setQuiz(currentNum);
 };
 
-
+console.log("aa");
     
 
    
