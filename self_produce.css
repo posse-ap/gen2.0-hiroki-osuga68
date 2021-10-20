@@ -1,13 +1,18 @@
+body{
+  background-color: #f5f5f8;
+}
+
 img {
     max-width: 100%;
   }
-
+/* ----------------header------------------------ */
 #header{
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     position: fixed;
     width: 100%;
-    z-index: 999;
+    height: 64px;
+    z-index: 9;
 }
 .wrapper{
     max-width: 1200px;
@@ -33,19 +38,19 @@ img {
 
 .week{
   font-size: 14px;
-  color: darkgray;
+  color: #97b9d1;
 }
 .submit__button {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    background: #008bb7;
+    background: -webkit-linear-gradient(left, #0f71bc, #3ccfff);
     border-radius: 30px;
-    width: 240px;
-    height: 48px;
+    width: 200px;
+    height: 40px;
     color: #fff;
-    margin-top: 20px;
-    /* padding: 12px; */
+    margin: 12px 0;
   }
+  
 
   /* loading------------------------------------- */
 
@@ -77,7 +82,9 @@ img {
 .circle-border {
   position: absolute;
   top:42%;
-  left:44%;
+  left:45%;
+  /* top: 25%; */
+  /* left: 25%; */
   width: 100px;
   height: 100px;
   padding: 10px;
@@ -104,19 +111,21 @@ img {
 }
   /* ---------------------------------------------------- */
   
-  /* メイン */
+  /* -------------------メイン---------------------------- */
   #contents{
       display: flex;
-      padding: 100px 100px 30px;
+      padding: 84px 100px 40px;
       /* 上 左右 下 */
-      gap: 24px;
+      gap: 20px;
   }
+  /* -----------------左側のコンテンツ-------------------- */
   .left_contents{
+    background-color: #fff;
       width: 50%;
   }
   .date{
       display: flex;
-      gap: 24px;
+      gap: 20px;
   }
   .date section{
     width: calc(100%/3);  
@@ -134,42 +143,48 @@ img {
     padding-bottom:20px ;
 }
 .subtitle{
-    color: cornflowerblue;
+    color: #0f71bc;
 }
 .number{
     font-size: 48px;
     font-weight: 900;
 }
 .hour{
-    color: darkgray;
+    color: #97b9d1;
 }
   .bargraph{
-      margin-top: 24px;
+    height: 360px;
+    margin-top: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
+
+  /* ----------------右側のコンテンツ----------------- */
   .right_contents{
+    background-color: #fff;
       display: flex;
-      gap: 24px;
+      gap: 20px;
       width: 50%;
   }
   .right_contents section{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
+  /* -------------学習言語（左）------------- */
   .learning_language_area{
     width: 50%;
+    /* box-sizing: border-box; */
   }
   .learning_language{
       font-weight: bold;
       margin-top: 24px;
       margin-bottom: 24px;
-      margin-left: 24px;
+      margin-left: 20px;
   }
   .each_language{
       display: flex;
       flex-wrap: wrap;
       margin-top: 36px;
   }
-  .each_language .cicle1{
+  .each_language .circle1{
     display: inline-block;
       border: solid;
       background-color: blue;
@@ -182,7 +197,7 @@ img {
       margin: 12px;
   }
 
-
+  /* -------------学習コンテンツ（右）------------- */
   .learning_contents_area{
       width: 50%;   
   }
@@ -190,14 +205,14 @@ img {
     font-weight: bold;
     margin-top: 24px;
     margin-bottom: 24px;
-    margin-left: 24px;
+    margin-left: 20px;
 }
   .each_content{
     display: flex;
     flex-wrap: wrap;
     margin-top: 36px;
 }
-.each_content .cicle1{
+.each_content .circle1{
     display: inline-block;
       border: solid;
       background-color: blue;
@@ -210,10 +225,9 @@ img {
     margin: 12px;
 }
 
-
-.chage_page{
+/* ----------ページの切り替え------------- */
+.change_page{
   text-align: center;
-  /* margin-bottom: 60px; */
 }
 /* 疑似要素で三角のやじるしアイコン */
 /* 左側 */
@@ -228,8 +242,8 @@ img {
   width: 6px;
   height: 6px;
   border: 0px;
-  border-top: solid 2px #5bc0de;
-  border-left: solid 2px #5bc0de;
+  border-top: solid 2px #0f71bc;
+  border-left: solid 2px #0f71bc;
   -ms-transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
@@ -250,8 +264,8 @@ img {
   width: 6px;
   height: 6px;
   border: 0px;
-  border-top: solid 2px #5bc0de;
-  border-right: solid 2px #5bc0de;
+  border-top: solid 2px #97b9d1;
+  border-right: solid 2px #97b9d1;
   -ms-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -261,17 +275,8 @@ img {
   margin-top: -10px;
 }
 
-/* #modal{
-    width: 600px;
-    height: 400px;
-    padding: 0 120px;
-    margin: 0 auto;
-    margin-bottom: 60px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-} */
+/* -----------------モーダル------------------- */
 
-
-/* モーダルCSSここから */
 .modalArea {
     visibility: hidden; /* displayではなくvisibility */
     opacity : 0;
@@ -296,14 +301,13 @@ img {
     gap: 40px; */
     position: absolute;
     border-radius: 30px;
-    width: 750px;
-    height: 400px;
+    width: 900px;
+    height: 420px;
     top: 50%;
     left: 50%;
     transform:translate(-50%,-50%);
-    /* width: 80%; */
     max-width: 800px;
-    padding: 40px 60px;
+    padding: 40px 56px;
     background-color: #fff;
   }
   .modal_area{
@@ -347,25 +351,40 @@ img {
 }
 .check_contents label{
   background-color: whitesmoke;
+  /* background-color: #e7f5ff; チェックされたとき*/
   font-size: 18px;
   margin-left: 20px;
+  padding: 0px 5px;
+  border-radius: 10px;
   line-height: 1.8;
+}
+.check_area_click{
+  background-color: #e7f5ff!important;
+}
+.check_style{
+  color: rgb(189, 184, 184);
+  cursor: pointer;
+}
+.check_style_click{
+  color: #0f71bd;
 }
 
 .confirm_twitter{
   margin-top: 16px;
 }
+
+
 .submit__button2 {
     display: block;
     font-size: 18px;
     font-weight: bold;
-    background: #008bb7;
+    background: -webkit-linear-gradient(left, #0f71bc, #3ccfff);
     border-radius: 30px;
     width: 240px;
     height: 48px;
     color: #fff;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 20px;
     /* padding: 12px; */
   }
 
@@ -391,8 +410,8 @@ img {
     border-radius: 50%;
     font-size: 30px;
     position: absolute;
-    top: 0.5rem;
-    right: 1rem;
+    top: 20px;
+    right: 20px;
     cursor: pointer;
   }
   
@@ -411,3 +430,175 @@ img {
     border-radius: 2px;
     cursor: pointer;
   }
+
+  .submit__button_sp {
+    display: none;
+    font-size: 16px;
+    font-weight: bold;
+    background: -webkit-linear-gradient(left, #0f71bc, #3ccfff);
+    border-radius: 30px;
+    width: 200px;
+    height: 40px;
+    color: #fff;
+    margin: 20px auto;
+  }
+
+@media screen and (max-width: 767px){
+  #contents{
+    display: block;
+    padding: 84px 20px 20px;
+    /* 上 左右 下 */
+    gap: 16px;
+  }
+  .left_contents{
+      width: 100%;
+  }
+  .date{
+    gap: 16px;
+    /* marginだと上下関係時に相殺が起きる */
+    padding-bottom: 16px;
+  }
+  .date section p{
+    line-height: 1.4;
+  }
+  .subtitle{
+    font-size: 14px;
+  }
+  .number{
+    font-size: 32px;
+  }
+  .hour{
+    font-size: 14px;
+  }
+  .bargraph{
+    padding-top: 16px;
+    /* padding-bottom: 16px; */
+  }
+  .right_contents{
+    gap: 16px;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .each_language{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .each_language .circle1{
+    display: inline-block;
+      border: solid;
+      background-color: blue;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      margin-right: 2px;
+  }
+  .each_language p{
+    font-size: 10px;
+      margin: 4px;
+  }
+  /* 学習コンテンツ部分 */
+  .each_content{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+.each_content .circle1{
+    display: inline-block;
+      border: solid;
+      background-color: blue;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      margin-right: 2px;
+  }
+  .each_content p{
+    font-size: 10px;
+    margin: 4px;
+  }
+
+  header #openModal{
+    display: none;
+  }
+  .submit__button_sp{
+    display: block;
+  }
+  /* -----modal_sp--------------- */
+  .modalWrapper {
+    /* box-sizing: border-box; */
+    position: absolute;
+    border-radius: 30px;
+    width: 90%;
+    height: 750px;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    max-width: 800px;
+    padding: 20px 20px;
+    background-color: #fff;
+  }
+  /* modalを縦方向に */
+  .modal_area{
+    display: block;
+  }
+  #modal_left{
+    width: 100%;
+  }
+  #modal_right{
+    width: 100%;
+  }
+
+
+  .modal_small_title{
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+  
+  input{
+    background-color: #f5f5f8;
+    height: 40px;
+    border-radius: 5px;
+  }
+
+  .s_textbox{
+    width: 100%;
+    height: 40px;
+    border:none;
+      
+  }
+  .l_textbox{
+    width: 100%;
+    height: 100px;
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+    border-radius: 5px;
+  }
+
+  .check_contents{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .check_contents label{
+    background-color: whitesmoke;
+    /* background-color: #e7f5ff; チェックされたとき*/
+    font-size: 18px;
+    margin-left: 20px;
+    padding: 0px 5px;
+    border-radius: 10px;
+    line-height: 1.8;
+  }
+  
+  .confirm_twitter{
+    margin-top: 10px;
+  }
+  /* loadingの位置をpc版から変えて、スクロールしても位置固定 */
+  .circle-border {
+    position: fixed;
+    top:40%;
+    left:38%;
+  }
+
+}

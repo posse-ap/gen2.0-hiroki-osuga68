@@ -6,8 +6,15 @@
     <title>自主制作</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="self_produce.css">
+    <!-- font awesome読み込み -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <!-- カレンダー埋め込み -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- chart.jsの読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <!-- datalabelsプラグインを呼び出す -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
     <!-- ヘッダー部分 -->
@@ -60,17 +67,20 @@
             <section class="learning_language_area">
                 <div>
                     <p class="learning_language">学習言語</p>
-                    <img src="img/graph2.png" alt="">
+                    <!-- <img src="img/graph2.png" alt=""> -->
+                    <canvas id="myChart" height="260px">
+                        <script src="chart2.js"></script>
+                    </canvas>
                 </div>
                 <div class="each_language">
-                    <p><span class="cicle1"></span>JavaScript</p>
-                    <p><span class="cicle1"></span>CSS</p>
-                    <p><span class="cicle1"></span>PHP</p>
-                    <p><span class="cicle1"></span>HTML</p>
-                    <p><span class="cicle1"></span>Laravel</p>
-                    <p><span class="cicle1"></span>SQL</p>
-                    <p><span class="cicle1"></span>SHELL</p>
-                    <p><span class="cicle1"></span>情報system基礎知識（その他）</p>
+                    <p><span class="circle1"></span>JavaScript</p>
+                    <p><span class="circle1"></span>CSS</p>
+                    <p><span class="circle1"></span>PHP</p>
+                    <p><span class="circle1"></span>HTML</p>
+                    <p><span class="circle1"></span>Laravel</p>
+                    <p><span class="circle1"></span>SQL</p>
+                    <p><span class="circle1"></span>SHELL</p>
+                    <p><span class="circle1"></span>情報system基礎知識（その他）</p>
                 </div>
             </section>
             <section class="learning_contents_area">
@@ -79,21 +89,23 @@
                     <img src="img/graph3.png" alt="">
                 </div>
                 <div class="each_content">
-                    <p><span class="cicle1"></span>ドットインストール</p>
-                    <p><span class="cicle1"></span>N予備校</p>
-                    <p><span class="cicle1"></span>POSSE課題</p>
+                    <p><span class="circle1"></span>ドットインストール</p>
+                    <p><span class="circle1"></span>N予備校</p>
+                    <p><span class="circle1"></span>POSSE課題</p>
                 </div>
             </section>
         </div>
     </div>
     <!-- 月のページ切り替え -->
-    <div class="chage_page">
+    <div class="change_page">
         <time>
             <a href="#" class="arrow_left"></a>
             2021年10月
             <a href="#" class="arrow_right"></a>
         </time>
     </div>
+    <!-- sp版のボタン -->
+    <button id="openModal_2" class="submit__button_sp">記録・投稿</button>
 
     <!-- モーダルエリア、場所の確保 -->
     <section id="modalArea" class="modalArea">
@@ -114,23 +126,23 @@
                     <div>
                         <dt class="modal_small_title">学習コンテンツ（複数選択可）</dt>
                         <dd class="check_contents">
-                            <p><label><input type="checkbox" value="N予備校">N予備校</label></p>
-                            <p><label><input type="checkbox" value="ドットインストール">ドットインストール</label></p>
-                            <p><label><input type="checkbox" value="POSSE課題">POSSE課題</label></p>
+                            <p><label id="check_area1"><i id="checkbox1" class="fas fa-check-circle check_style"></i>N予備校</label></p>
+                            <p><label id="check_area2"><i id="checkbox2" class="fas fa-check-circle check_style"></i>ドットインストール</label></p>
+                            <p><label id="check_area3"><i id="checkbox3" class="fas fa-check-circle check_style"></i>POSSE課題</label></p>
                         </dd>
                     </div>
 
                     <div>
                         <dt class="modal_small_title">学習言語（複数選択可）</dt>
                         <dd class="check_contents">
-                            <p><label><input type="checkbox" value="HTML">HTML</label></p>
-                            <p><label><input type="checkbox" value="CSS">CSS</label></p>
-                            <p><label><input type="checkbox" value="JavaScript">JavaScript</label></p>
-                            <p><label><input type="checkbox" value="PHP">PHP</label></p>
-                            <p><label><input type="checkbox" value="Laravel">Laravel</label></p>
-                            <p><label><input type="checkbox" value="SQL">SQL</label></p>
-                            <p><label><input type="checkbox" value="SHELL">SHELL</label></p>
-                            <p><label><input type="checkbox" value="情報システム基礎知識（その他）">情報システム基礎知識（その他）</label></p>
+                            <p><label id="check_area4"><i id="checkbox4" class="fas fa-check-circle check_style"></i>HTML</label></p>
+                            <p><label id="check_area5"><i id="checkbox5" class="fas fa-check-circle check_style"></i>CSS</label></p>
+                            <p><label id="check_area6"><i id="checkbox6" class="fas fa-check-circle check_style"></i>JavaScript</label></p>
+                            <p><label id="check_area7"><i id="checkbox7" class="fas fa-check-circle check_style"></i>PHP</label></p>
+                            <p><label id="check_area8"><i id="checkbox8" class="fas fa-check-circle check_style"></i>Laravel</label></p>
+                            <p><label id="check_area9"><i id="checkbox9" class="fas fa-check-circle check_style"></i>SQL</label></p>
+                            <p><label id="check_area10"><i id="checkbox10" class="fas fa-check-circle check_style"></i>SHELL</label></p>
+                            <p><label id="check_area11"><i id="checkbox11" class="fas fa-check-circle check_style"></i>情報システム基礎知識（その他）</label></p>
                         </dd>
                     </div>
 
@@ -145,7 +157,7 @@
                     <div>
                         <dt class="modal_small_title"><label>Twitter用コメント</label></dt>
                         <!-- <dd><input class="l_textbox" type="text"></dd> -->
-                        <textarea class="l_textbox" name="example1" cols="50" rows="12"></textarea><p></p>
+                        <textarea class="l_textbox" name="comments_twitter" cols="50" rows="12"></textarea><p></p>
                     </div>
 
                     <div class="confirm_twitter">
@@ -168,7 +180,9 @@
 
           
             </div>
+            
             <button id="submit_info" class="submit__button2">記録・投稿</button>
+            
         </div>
     </section>
     <script src="self_produce.js"></script>
