@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <!-- datalabelsプラグインを呼び出す -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 </head>
 <body>
     <!-- ヘッダー部分 -->
@@ -59,17 +60,24 @@
                 </section>
             </div>
         <section class="bargraph">
-            <img src="img/graph1.png" alt="">
+            <div style="position: relative; height:auto; width:100%">
+            <!-- <img src="img/graph1.png" alt=""> -->
+                <canvas id="myBar2Chart">
+                    <script src="chart1.js"></script>
+                </canvas>
+            </div>
         </section>
         </div>
         <!-- 右側のコンテンツ -->
         <div class="right_contents">
             <section class="learning_language_area">
-                <div>
-                    <p class="learning_language">学習言語</p>
+                <p class="learning_language">学習言語</p>
+                <div class="languages_graph" style="position: relative; height:46%; width:80%">
                     <!-- <img src="img/graph2.png" alt=""> -->
-                    <canvas id="myChart" height="260px">
+                    <canvas id="myChart">
+                    <!-- <div id="donutchart1" style="width: 100%; height: 300px;"> -->
                         <script src="chart2.js"></script>
+                    <!-- </div> -->
                     </canvas>
                 </div>
                 <div class="each_language">
@@ -84,9 +92,14 @@
                 </div>
             </section>
             <section class="learning_contents_area">
-                <div>
-                    <p class="learning_contents">学習コンテンツ</p>
-                    <img src="img/graph3.png" alt="">
+                <p class="learning_contents">学習コンテンツ</p>
+                <div class="contents_graph" style="position: relative; height:46%; width:80%">
+                    <!-- <img src="img/graph3.png" alt=""> -->
+                    <canvas id="myChart3">
+                    <!-- <div id="donutchart" style="width: 100%; height: 300px;"> -->
+                        <script src="chart3.js"></script>
+                    </canvas>    
+                    <!-- </div> -->
                 </div>
                 <div class="each_content">
                     <p><span class="circle1"></span>ドットインストール</p>
@@ -126,23 +139,20 @@
                     <div>
                         <dt class="modal_small_title">学習コンテンツ（複数選択可）</dt>
                         <dd class="check_contents">
-                            <p><label id="check_area1"><i id="checkbox1" class="fas fa-check-circle check_style"></i>N予備校</label></p>
-                            <p><label id="check_area2"><i id="checkbox2" class="fas fa-check-circle check_style"></i>ドットインストール</label></p>
-                            <p><label id="check_area3"><i id="checkbox3" class="fas fa-check-circle check_style"></i>POSSE課題</label></p>
+                            <p><label id="check_area1"><input type="checkbox"><span id="checkbox1" class="fas fa-check-circle check_style"></span>N予備校</label></p>
+                            <p><label id="check_area2"><input type="checkbox"><span id="checkbox2" class="fas fa-check-circle check_style"></span>ドットインストール</label></p>
+                            <p><label id="check_area3"><input type="checkbox"><span id="checkbox3" class="fas fa-check-circle check_style"></span>POSSE課題</label></p>
                         </dd>
                     </div>
 
                     <div>
                         <dt class="modal_small_title">学習言語（複数選択可）</dt>
                         <dd class="check_contents">
-                            <p><label id="check_area4"><i id="checkbox4" class="fas fa-check-circle check_style"></i>HTML</label></p>
-                            <p><label id="check_area5"><i id="checkbox5" class="fas fa-check-circle check_style"></i>CSS</label></p>
-                            <p><label id="check_area6"><i id="checkbox6" class="fas fa-check-circle check_style"></i>JavaScript</label></p>
-                            <p><label id="check_area7"><i id="checkbox7" class="fas fa-check-circle check_style"></i>PHP</label></p>
-                            <p><label id="check_area8"><i id="checkbox8" class="fas fa-check-circle check_style"></i>Laravel</label></p>
-                            <p><label id="check_area9"><i id="checkbox9" class="fas fa-check-circle check_style"></i>SQL</label></p>
-                            <p><label id="check_area10"><i id="checkbox10" class="fas fa-check-circle check_style"></i>SHELL</label></p>
-                            <p><label id="check_area11"><i id="checkbox11" class="fas fa-check-circle check_style"></i>情報システム基礎知識（その他）</label></p>
+                            <p><label id="check_area4"><input type="checkbox"><span id="checkbox4" class="fas fa-check-circle check_style"></span>HTML</label></p>
+                            <p><label id="check_area5"><input type="checkbox"><span id="checkbox5" class="fas fa-check-circle check_style"></span>Laravel</label></p>
+                            <p><label id="check_area6"><input type="checkbox"><span id="checkbox6" class="fas fa-check-circle check_style"></span>SQL</label></p>
+                            <p><label id="check_area7"><input type="checkbox"><span id="checkbox7" class="fas fa-check-circle check_style"></span>SHELL</label></p>
+                            <p><label id="check_area8"><input type="checkbox"><span id="checkbox8" class="fas fa-check-circle check_style"></span>情報システム基礎知識（その他）</label></p>
                         </dd>
                     </div>
 

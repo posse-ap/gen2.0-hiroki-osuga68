@@ -57,6 +57,8 @@ function coloringCheckbox(i){
     check_area.classList.toggle('check_area_click');
   };
 };
-for(i=0; i<=10; i++){
+for(i=0; i<8; i++){
   coloringCheckbox(i);
 };
+
+// console.log(document.getElementById("myChart"));

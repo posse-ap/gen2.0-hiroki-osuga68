@@ -120,7 +120,7 @@ img {
   }
   /* -----------------左側のコンテンツ-------------------- */
   .left_contents{
-    background-color: #fff;
+    
       width: 50%;
   }
   .date{
@@ -128,6 +128,7 @@ img {
       gap: 20px;
   }
   .date section{
+    background-color: #fff;
     width: calc(100%/3);  
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -153,26 +154,37 @@ img {
     color: #97b9d1;
 }
   .bargraph{
-    height: 360px;
+    background-color: #fff;
+    height: auto;
     margin-top: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
   }
-
   /* ----------------右側のコンテンツ----------------- */
   .right_contents{
-    background-color: #fff;
+    
       display: flex;
       gap: 20px;
       width: 50%;
   }
   .right_contents section{
+    background-color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
   }
   /* -------------学習言語（左）------------- */
   .learning_language_area{
     width: 50%;
-    /* box-sizing: border-box; */
   }
+  .languages_graph{
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+  #myChart{
+    width: 80%;
+    height: 10vh;
+  }
+  
   .learning_language{
       font-weight: bold;
       margin-top: 24px;
@@ -194,12 +206,17 @@ img {
       margin-right: 4px;
   }
   .each_language p{
+      font-size: 14px;
       margin: 12px;
   }
 
   /* -------------学習コンテンツ（右）------------- */
   .learning_contents_area{
       width: 50%;   
+  }
+  .contents_graph{
+    box-sizing: border-box;
+    margin: 0 auto;
   }
   .learning_contents{
     font-weight: bold;
@@ -222,6 +239,7 @@ img {
       margin-right: 4px;
   }
   .each_content p{
+    font-size: 14px;
     margin: 12px;
 }
 
@@ -348,6 +366,10 @@ img {
 .check_contents{
   display: flex;
   flex-wrap: wrap;
+}
+.check_contents input{
+  box-sizing: border-box;
+  display: none;
 }
 .check_contents label{
   background-color: whitesmoke;
@@ -479,6 +501,9 @@ img {
     width: 100%;
     margin-top: 16px;
   }
+  .learning_language{
+    font-size: 14px;
+}
   .each_language{
     display: flex;
     flex-wrap: wrap;
@@ -499,6 +524,9 @@ img {
       margin: 4px;
   }
   /* 学習コンテンツ部分 */
+  .learning_contents{
+    font-size: 14px;
+}
   .each_content{
     display: flex;
     flex-wrap: wrap;
