@@ -39,6 +39,7 @@ img {
 .week{
   font-size: 14px;
   color: #97b9d1;
+  padding-top: 20px;
 }
 .submit__button {
     font-size: 16px;
@@ -205,7 +206,7 @@ img {
       height: 12px;
       margin-right: 4px;
   }
-  .each_language p{
+  .each_language li{
       font-size: 14px;
       margin: 12px;
   }
@@ -238,7 +239,7 @@ img {
       height: 12px;
       margin-right: 4px;
   }
-  .each_content p{
+  .each_content li{
     font-size: 14px;
     margin: 12px;
 }
@@ -371,6 +372,10 @@ img {
   box-sizing: border-box;
   display: none;
 }
+.confirm_twitter input{
+  box-sizing: border-box;
+  display: none;
+}
 .check_contents label{
   background-color: whitesmoke;
   /* background-color: #e7f5ff; チェックされたとき*/
@@ -379,6 +384,16 @@ img {
   padding: 0px 5px;
   border-radius: 10px;
   line-height: 1.8;
+}
+.confirm_twitter label{
+  font-size: 18px;
+  padding: 0px 5px;
+  border-radius: 10px;
+  line-height: 1.8;
+}
+.confirm_twitter span{
+  font-size: 28px;
+  margin-right: 4px;
 }
 .check_area_click{
   background-color: #e7f5ff!important;
@@ -393,6 +408,7 @@ img {
 
 .confirm_twitter{
   margin-top: 16px;
+  /* padding: auto 0; */
 }
 
 

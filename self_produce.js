@@ -42,7 +42,7 @@ submit_info.onclick = function(){
   circle_core.className = 'circle-core';
   // .loaded を追加してローディング表示を消す
   spinner.classList.toggle('loaded');
-  console.log(submit_info);
+  // console.log(submit_info);
    setTimeout(showFinish, 2000);
 };
 
@@ -57,8 +57,35 @@ function coloringCheckbox(i){
     check_area.classList.toggle('check_area_click');
   };
 };
-for(i=0; i<8; i++){
+for(i=0; i<=11; i++){
   coloringCheckbox(i);
 };
 
-// console.log(document.getElementById("myChart"));
+// 何にチェックしたかをコンソールで表示
+const formElements = document.forms.submitForm;
+
+formElements.addEventListener('submit', e =>{
+  e.preventDefault();
+  Array.prototype.forEach.call(formElements.learning, function (checkbox) {
+    if(checkbox.checked === true){
+      console.log('学習内容：', checkbox.value);
+      console.log(checkbox);
+    }
+  });
+})
+
+// //1-2 ツイートエリアの作成
+
+const button = document.getElementById('submit_info');
+let $url = 'https://twitter.com/intent/tweet?'
+button.setAttribute('href', $url);
+
+let twitterBox = document.getElementById('twitter_box');
+
+button.addEventListener('click', ()=>{
+  if(twitterBox.checked === true){
+  document.getElementById('textarea').value
+  $url += `text=${document.getElementById('textarea').value}`
+  console.log($url);
+  location.href = $url;}
+})
