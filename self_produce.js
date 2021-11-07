@@ -2,6 +2,17 @@
 var sample = document.getElementById('sample');
 var fp = flatpickr(sample);
 
+// let backgroundColor = ["#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"];
+// function Coloring (x){
+//   let colors = document.getElementsByClassName(`circle${x}`);
+//   colors = Array.from(colors) ;
+//   colors.forEach(newColor =>
+//   newColor.style.color = `backgroundColor${x-1}`
+//   );
+// };
+// for(x=1; backgroundColor.length; x++){
+//   Coloring(x);
+// };
 
 //modalの開閉
 (function () {
@@ -21,30 +32,37 @@ var fp = flatpickr(sample);
 
 // 投稿ボタンのid読み込み
 const submit_info = document.getElementById('submit_info');
+
+// loadingを消す
+function disappearSpinner(){
+  spinner.style.display = "none";
+}
 // 投稿完了の表示をさせる関数の宣言
 function showFinish() {
-  const modal_left = document.getElementById('modal_left');
-  const modal_right = document.getElementById('modal_right');
+  const modal_1st = document.getElementById('modal_1st');
+  const modal_2nd = document.getElementById('modal_2nd');
   const awesome_area = document.getElementById('awesome_area');
-  modal_left.style.display = "none";
-  modal_right.style.display = "none";
+  modal_1st.style.display = "none";
+  modal_2nd.style.display = "none";
   awesome_area.style.display = "block";
   submit_info.style.display = "none";
 };
 // 投稿ボタンを押した際、最初にloadingし、2秒後に投稿完了の表示をさせる
+let spinner = document.getElementById('my-spinner');
 submit_info.onclick = function(){
   // loadingを表示させる
-  let spinner = document.getElementById('my-spinner');
   let circle_border = document.getElementById('circle-border');
   let circle_core = document.getElementById('circle-core');
   spinner.className = 'spinner-box';
   circle_border.className = 'circle-border';
   circle_core.className = 'circle-core';
   // .loaded を追加してローディング表示を消す
-  spinner.classList.toggle('loaded');
+  // spinner.classList.toggle('loaded');
   // console.log(submit_info);
-   setTimeout(showFinish, 2000);
+  setTimeout(disappearSpinner, 1990);
+  setTimeout(showFinish, 2000);
 };
+
 
 // クリックした際にチェックボックスの色、各項目の背景色を変える
 // font awesomeでチェックボックス使っちゃたから余計な苦労してる説アリ
@@ -69,12 +87,13 @@ formElements.addEventListener('submit', e =>{
   Array.prototype.forEach.call(formElements.learning, function (checkbox) {
     if(checkbox.checked === true){
       console.log('学習内容：', checkbox.value);
-      console.log(checkbox);
+      // console.log(checkbox);
+      // formElements.learningに含まれる要素すべてがforEachにより１つのcheckboxという引数に格納された
     }
   });
 })
 
-// //1-2 ツイートエリアの作成
+//ツイートエリアの作成
 
 const button = document.getElementById('submit_info');
 let $url = 'https://twitter.com/intent/tweet?'
@@ -87,5 +106,8 @@ button.addEventListener('click', ()=>{
   document.getElementById('textarea').value
   $url += `text=${document.getElementById('textarea').value}`
   console.log($url);
-  location.href = $url;}
+  // location.href = $url;
+  window.open($url,'_blank');
+
+}
 })

@@ -16,7 +16,7 @@ var dataLabelPlugin = {
                     // Draw the text in black, with the specified font
                     ctx.fillStyle = 'rgb(255, 255, 255)';
 
-                    var fontSize = 12;
+                    var fontSize = 10;
                     var fontStyle = 'normal';
                     var fontFamily = 'Helvetica Neue';
                     ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
@@ -47,7 +47,7 @@ var chart = new Chart(myChart, {
         datasets: [{
             label: "学習言語",
             backgroundColor: ["#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"],
-            data: [80, 60, 46, 62, 67, 46, 26, 20],
+            data: [50, 50, 40, 52, 47, 46, 26, 20],
         }]
     },
     options: {

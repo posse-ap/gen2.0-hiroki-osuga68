@@ -1,5 +1,10 @@
 //棒グラフ2
-var ctx = document.getElementById("myBar2Chart");
+var ctx = document.getElementById("myBar2Chart").getContext("2d");;
+
+var blue_gradient = ctx.createLinearGradient(0, 0, 0, 600);
+blue_gradient.addColorStop(0, "#3DCEFE");
+blue_gradient.addColorStop(1, "#0056c0");
+
 var myBar2Chart = new Chart(ctx, {
   //グラフの種類
   type: 'bar',
@@ -11,18 +16,20 @@ var myBar2Chart = new Chart(ctx, {
       datasets: [
           {
               //凡例
-              label: "日にち",
+              label: "学習時間",
               //背景色
               // backgroundColor: "rgba(179,181,198,0.2)",
-              backgroundColor: "#0470dc",
+              backgroundColor: blue_gradient,
               //枠線の色
-              borderColor: "##0470dc",
+              borderColor: blue_gradient,
               //枠線の太さ
               borderWidth: 1,
               //背景色（ホバーしたときに）
-              hoverBackgroundColor: "rgba(179,181,198,0.4)",
+              hoverBackgroundColor: "rgba(0, 191, 255, 0.4)",
               //枠線の色（ホバーしたときに）
-              hoverBorderColor: "rgba(179,181,198,1)",
+              hoverBorderColor: "rgba(0, 191, 255, 0.4)",
+              borderRadius: 10,
+              borderSkipped: false,
               //グラフのデータ
               data: [2, 1, 3, 5, 2, 3, 5, 7, 5, 4, 3, 6, 8, 7, 4, 7, 5, 2, 6, 3, 5, 2, 3, 5, 7, 6, 4, 3, 1, 4]
           }
@@ -51,7 +58,7 @@ var myBar2Chart = new Chart(ctx, {
                     min: 0,                        // 最小値
                     max: 8,                       // 最大値
                     stepSize: 2,                   // 軸間隔
-                    fontColor: "blue",             // 目盛りの色
+                    fontColor: "rgb(65, 105, 225)",             // 目盛りの色
                     fontSize: 10,                   // フォントサイズ
                     callback: function(value, index, values){
                       return  value +  'h'

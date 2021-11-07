@@ -43,7 +43,7 @@
     <!-- 月のweek毎のシート？ -->
     <div id="contents">
         <!-- 左側のコンテンツ -->
-        <div class="left_contents">
+        <div class="bar_graph_wrapper">
             <div class="date">
                 <section>
                     <p class="subtitle">Today</p>
@@ -63,7 +63,6 @@
             </div>
             <section class="bargraph">
                 <div style="position: relative; height:auto; width:100%">
-                    <!-- <img src="img/graph1.png" alt=""> -->
                     <canvas id="myBar2Chart">
                         <!-- グラフはここに差し込む -->
                     </canvas>
@@ -71,11 +70,10 @@
             </section>
         </div>
         <!-- 右側のコンテンツ -->
-        <div class="right_contents">
+        <div class="doughnut_chart_wrapper">
             <section class="learning_language_area">
                 <div class="learning_language">学習言語</div>
                 <div class="languages_graph" style="position: relative; height:46%; width:80%">
-                    <!-- <img src="img/graph2.png" alt=""> -->
                     <canvas id="myChart">
                         <!-- <div id="donutchart1" style="width: 100%; height: 300px;"> -->
                         <!-- グラフはここに差し込む -->
@@ -84,29 +82,28 @@
                 </div>
                 <ul class="each_language">
                     <li><span class="circle1"></span>JavaScript</li>
-                    <li><span class="circle1"></span>CSS</li>
-                    <li><span class="circle1"></span>PHP</li>
-                    <li><span class="circle1"></span>HTML</li>
-                    <li><span class="circle1"></span>Laravel</li>
-                    <li><span class="circle1"></span>SQL</li>
-                    <li><span class="circle1"></span>SHELL</li>
-                    <li><span class="circle1"></span>情報system基礎知識（その他）</li>
+                    <li><span class="circle2"></span>CSS</li>
+                    <li><span class="circle3"></span>PHP</li>
+                    <li><span class="circle4"></span>HTML</li>
+                    <li><span class="circle5"></span>Laravel</li>
+                    <li><span class="circle6"></span>SQL</li>
+                    <li><span class="circle7"></span>SHELL</li>
+                    <li><span class="circle8"></span>情報system基礎知識 (others)</li>
                 </ul>
             </section>
             <section class="learning_contents_area">
                 <div class="learning_contents">学習コンテンツ</div>
                 <div class="contents_graph" style="position: relative; height:46%; width:80%">
-                    <!-- <img src="img/graph3.png" alt=""> -->
                     <canvas id="myChart3">
                         <!-- <div id="donutchart" style="width: 100%; height: 300px;"> -->
                         <!-- グラフはここに差し込む -->
+                        <!-- </div> -->
                     </canvas>
-                    <!-- </div> -->
                 </div>
                 <ul class="each_content">
                     <li><span class="circle1"></span>ドットインストール</li>
-                    <li><span class="circle1"></span>N予備校</li>
-                    <li><span class="circle1"></span>POSSE課題</li>
+                    <li><span class="circle2"></span>N予備校</li>
+                    <li><span class="circle3"></span>POSSE課題</li>
                 </ul>
             </section>
         </div>
@@ -132,7 +129,7 @@
                 <!-- エリア内のflex適用部分 -->
                 <div class="modal_area">
                     <!-- 左側のコンテンツ -->
-                    <div id="modal_left">
+                    <div id="modal_1st">
 
                         <div>
                             <div class="modal_small_title">学習日</div>
@@ -157,36 +154,35 @@
                         <div>
                             <div class="modal_small_title">学習言語（複数選択可）</div>
                             <ul class="check_contents">
-                                <li><label id="check_area4"><input type="checkbox" name="learning"><span id="checkbox4"
+                                <li><label id="check_area4"><input type="checkbox" name="learning" value="HTML"><span id="checkbox4"
                                             class="fas fa-check-circle check_style"></span>HTML</label></li>
-                                <li><label id="check_area5"><input type="checkbox" name="learning"><span id="checkbox5"
+                                <li><label id="check_area5"><input type="checkbox" name="learning" value="CSS"><span id="checkbox5"
                                             class="fas fa-check-circle check_style"></span>CSS</label></li>
-                                <li><label id="check_area6"><input type="checkbox" name="learning"><span id="checkbox6"
+                                <li><label id="check_area6"><input type="checkbox" name="learning" value="JavaScript"><span id="checkbox6"
                                             class="fas fa-check-circle check_style"></span>JavaScript</label></li>
-                                <li><label id="check_area7"><input type="checkbox" name="learning"><span id="checkbox7"
+                                <li><label id="check_area7"><input type="checkbox" name="learning" value="PHP"><span id="checkbox7"
                                             class="fas fa-check-circle check_style"></span>PHP</label></li>
-                                <li><label id="check_area8"><input type="checkbox" name="learning"><span id="checkbox8"
+                                <li><label id="check_area8"><input type="checkbox" name="learning" value="Laravel"><span id="checkbox8"
                                             class="fas fa-check-circle check_style"></span>Laravel</label></li>
-                                <li><label id="check_area9"><input type="checkbox" name="learning"><span id="checkbox9"
+                                <li><label id="check_area9"><input type="checkbox" name="learning" value="SQL"><span id="checkbox9"
                                             class="fas fa-check-circle check_style"></span>SQL</label></li>
-                                <li><label id="check_area10"><input type="checkbox" name="learning"><span
-                                            id="checkbox10" class="fas fa-check-circle check_style"></span>SHELL</label>
-                                </li>
-                                <li><label id="check_area11"><input type="checkbox" name="learning"><span id="checkbox11" class="fas fa-check-circle check_style"></span>情報システム基礎知識（その他）</label></li>
+                                <li><label id="check_area10"><input type="checkbox" name="learning" value="SHELL"><span
+                                            id="checkbox10" class="fas fa-check-circle check_style"></span>SHELL</label></li>
+                                <li><label id="check_area11"><input type="checkbox" name="learning" value="情報システム基礎知識"><span id="checkbox11" class="fas fa-check-circle check_style"></span>情報システム基礎知識（その他）</label></li>
                             </ul>
                         </div>
 
                     </div>
                     <!-- 右側のコンテンツ -->
-                    <div id="modal_right">
+                    <div id="modal_2nd">
                         <div>
                             <p class="modal_small_title">学習時間</p>
-                            <input class="s_textbox" type="text">
+                            <input class="s_textbox" type="number" step="1" min="0" max="10">
                         </div>
 
                         <div>
                             <p class="modal_small_title">Twitter用コメント</p>
-                            <textarea id="textarea" class="l_textbox" name="comments_twitter" cols="50" rows="12"></textarea>
+                            <textarea id="textarea" class="l_textbox" name="comments_twitter"></textarea>
                         </div>
 
                         <div class="confirm_twitter">
@@ -195,7 +191,7 @@
                         </div>
                     </div>
 
-                    <!-- 投稿完了モーダル modal_area内、noneさせたいのはmodal_left,right-->
+                    <!-- 投稿完了モーダル modal_area内、noneさせたいのはmodal_1st,right-->
                     <div id="awesome_area">
                         <div>
                             <img src="img/Awesome.png" alt="">
@@ -211,8 +207,7 @@
 
                 </div>
 
-                <button id="submit_info" class="submit__button2">記録・投稿</button>
-                <!-- <a id="tweet-area" href="https://twitter.com/intent/tweet?button_hashtag="></a> -->
+                <button id="submit_info" class="submit__button2" target="_blank">記録・投稿</button>
             </form>
         </div>
     </section>
