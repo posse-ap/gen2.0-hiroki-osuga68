@@ -61,12 +61,19 @@ services:
     # image: mysql:5.7
     build:
       context: ./mysql
+    command: --default-authentication-plugin=mysql_native_password
+#↑....MYSQL8.0ではログイン認証方式に caching_sha2_password がデフォルトで設定されています。
+#しかし、PHPのMySQL接続ライブラリはこれに対応していないらしいです。  
+#以上のコマンドで、認証方式をmysql_native_passwordに変更します。（僕の環境だとターミナルからはアクセス権限ではじかれた）
     ports:
       - 13306:3306
+      # mysqlのデータを永続化させる（コンテナを削除し再作成した際にテーブルが消えるのを防ぐ）ためにvolumesが必要
+      #ホスト側には自動で/mysql/dataのディレクトリが作られます
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/sql:/docker-entrypoint-initdb.d
+      #↑sqlファイルに、コンテナ作成時に初期データを流し込める
     environment:
       - MYSQL_DATABASE=quizy
       - MYSQL_USER=quizy
