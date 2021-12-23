@@ -7,12 +7,13 @@ USE quizy;
 DROP TABLE IF EXISTS big_questions; 
 CREATE TABLE big_questions (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    big_question_id INT NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
-INSERT INTO big_questions (name) VALUES
-('東京の難読地名クイズ'),
-('広島の難読地名クイズ');
+INSERT INTO big_questions (big_question_id, name) VALUES
+(1, '東京の難読地名クイズ'),
+(2, '広島の難読地名クイズ');
 
 -- questionsテーブル
 -- DROP TABLE IF EXISTS questions; 

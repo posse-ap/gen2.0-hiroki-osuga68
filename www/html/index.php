@@ -1,10 +1,6 @@
 <?php 
-// // DB接続情報
-// $user = 'quizy';
-// $pass = 'password';
-// $dbname = 'quizy';
-// $host = 'localhost';
-echo (empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+// echo (empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
 // defineの値は環境によって変えてください。
 define('HOSTNAME', 'db');
@@ -18,30 +14,22 @@ try {
   // 接続に成功したら、SQL文を使ってデータを引っ張ったりできるPDOオブジェクトを返してくれる
   $db  = new PDO('mysql:host=' . HOSTNAME . ';dbname=' . DATABASE, USERNAME, PASSWORD);
   $msg = "MySQLへの接続確認が取れました。";  
-  //データベースに対して実行するSQL文を作成
-  $sql = "SELECT * FROM big_questions";
-  //SQL文を実行
-  $statement = $db -> query($sql);
-	
-	//レコード件数取得
-	$row_count = $statement->rowCount();
-	
-	while($row = $statement->fetch()){
-		$rows[] = $row;
-	}
-  //データベース接続切断
-	// $db = null;
-
 } catch (PDOException $e) {
   $isConnect = false;
   $msg       = "MySQLへの接続に失敗しました。<br>(" . $e->getMessage() . ")";
 }
     $id = $_GET['id'];
-    echo $id;
+    // echo $id;
     
-    $choice = $db->prepare('SELECT * FROM choices WHERE big_question_id=?'.$id);
+    $question = $db->prepare('SELECT * FROM big_questions WHERE big_question_id='.$id);
+    $question->execute(array($_REQUEST['id']));
+    $question_data = $question->fetchAll();
+    // print_r($question_data);
+
+    $choice = $db->prepare('SELECT * FROM choices WHERE big_question_id='.$id);
     $choice->execute(array($_REQUEST['id']));
     $choice_data = $choice->fetchAll();
+    // print_r($choice_data);
 ?>
 
 <html lang="ja">
@@ -55,31 +43,44 @@ try {
 </head>
 <body>
     <p><?php echo $msg; ?></p>
-    
-    レコード件数： <?php echo $row_count; ?>
  
-<table border='1'>
-<tr><td>id</td><td>...question</td></tr>
- <!-- SQL実行結果が連想配列で取得出来るため、foreach を使って全部ループ -->
-<?php 
-foreach($rows as $row){
-?> 
+<table>
+<tr><td>id</td><td>& question</td></tr>
 <tr> 
-	<td><?php echo $row['id']; ?></td> 
-	<td><?php echo htmlspecialchars($row['name'],ENT_QUOTES,'UTF-8'); ?></td> 
+	<td><?php print($question_data[0][1]); ?></td> 
+	<td><?php print($question_data[0][2]); ?></td> 
 </tr> 
-<?php 
-} 
-?>
- 
 </table>
 
- 
-    
+ <?php
+ foreach($choice_data as $choice_data){
+  $shuffle_number = [0,1,2];
+  shuffle($shuffle_number);
+   ?>    
     <div id="main" class="container">
-        <!-- writing.jsに書き出したhtml要素をここに呼び出す -->
+      <h2 class="outline"><span><?php echo $choice_data['question_id']?>.この地名はなんて読む？</span></h2>
+      <div>
+        <img src="../quizy images/<?php echo $choice_data['image']?>" alt="難読地名">
+      </div>
+      <ul class="list_arrange">
+        <li><button onclick="makingTrueAnswerBox(<?= $choice_data['question_id'] ?>,<?= $shuffle_number[0]?>, 0)" class="choices_arrange" id="<?php print($choice_data['question_id'])?>_choice<?php $shuffle_number[0]?>"><?php echo $choice_data["choice$shuffle_number[0]"];?></button></li>
+        <li><button onclick="makingTrueAnswerBox(<?= $choice_data['question_id'] ?>,<?= $shuffle_number[1]?>, 0)" class="choices_arrange" id="<?php print($choice_data['question_id'])?>_choice<?php $shuffle_number[1]?>"><?php echo $choice_data["choice$shuffle_number[1]"];?></button></li>
+        <li><button onclick="makingTrueAnswerBox(<?= $choice_data['question_id'] ?>,<?= $shuffle_number[2]?>, 0)" class="choices_arrange" id="<?php print($choice_data['question_id'])?>_choice<?php $shuffle_number[2]?>"><?php echo $choice_data["choice$shuffle_number[2]"];?></button></li>
+      </ul>
+      <div class="result_border" id="correct_area<?php  print($choice_data['question_id']) ?>">
+        <span class="true_underline">正解！</span>
+        <p>正解は<?php print($choice_data['choice0']);?>です</p>
+      </div>
+      <div class="result_border" id="false_area<?php  print($choice_data['question_id']) ?>">
+        <span class="false_underline">不正解。。。</span>
+        <p>正解は<?php print($choice_data['choice0']);?>です</p>
+      </div>
+        
     </div>
-     
+ 
+<?php
+ }
+ ?>
     <script src="writing.js"></script>
 </body>
 </html>

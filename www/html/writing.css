@@ -36,11 +36,11 @@
     margin: 30px auto;
 }
 
-.list-arrange{
+.list_arrange{
     list-style-type: none;
      text-align: center;   
 }
-.choices-arrange{
+.choices_arrange{
     cursor: pointer;
     font-weight: bold;
     border: 1px groove;
@@ -65,7 +65,18 @@ li.wrong{
     font-weight: bold;
 }
 
-.result-border{
+.answer-color{
+    color: white;
+    background-color: deepskyblue;
+}
+
+.false-color{
+    color: white;
+    background-color:#E55204;
+}
+
+.result_border{
+    display: none;
     font-weight: bold;
     border: 1px groove;
     width: 600px; 
@@ -79,17 +90,26 @@ li.wrong{
     border-spacing: 10px;
 }
 
-.underline{
+.true_underline{
     display: inline-block;
     background:linear-gradient(transparent 60%, rgb(102, 245, 255) 60%);
     line-height: 1!important;
 }
 
-.underline2{
+.false_underline{
     display: inline-block;
     background:linear-gradient(transparent 60%, rgb(255, 102, 102) 60%);
     line-height: 1!important;
 }
 
+.cannot-click{
+    pointer-events: none;
+}
 
 
+.correct_area{
+    display: none;
+}
+.false_area{
+    display: none;
+}
