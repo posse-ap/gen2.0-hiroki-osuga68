@@ -199,7 +199,7 @@ body{
         margin-top: 36px;
         margin-left: 12px;
     }
-    .each_language .circle1{
+    .each_language .circle0b03fc{
       display: inline-block;
         background-color: #0b03fc;
         border-radius: 50%;
@@ -207,7 +207,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle2{
+    /* .each_language .circle1{
+      display: inline-block;
+        background-color: #0b03fc;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circle1077a3{
       display: inline-block;
         background-color: #1077a3;
         border-radius: 50%;
@@ -215,7 +223,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle3{
+    /* .each_language .circle2{
+      display: inline-block;
+        background-color: #1077a3;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circle19b4c2{
       display: inline-block;
         background-color: #19b4c2;
         border-radius: 50%;
@@ -223,7 +239,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle4{
+    /* .each_language .circle3{
+      display: inline-block;
+        background-color: #19b4c2;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circle86c2db{
       display: inline-block;
         background-color: #86c2db;
         border-radius: 50%;
@@ -231,7 +255,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle5{
+    /* .each_language .circle4{
+      display: inline-block;
+        background-color: #86c2db;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circleb6a3d1{
       display: inline-block;
         background-color: #b6a3d1;
         border-radius: 50%;
@@ -239,7 +271,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle6{
+    /* .each_language .circle5{
+      display: inline-block;
+        background-color: #b6a3d1;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circle7250ab{
       display: inline-block;
         background-color: #7250ab;
         border-radius: 50%;
@@ -247,7 +287,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle7{
+    /* .each_language .circle6{
+      display: inline-block;
+        background-color: #7250ab;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circle4d0fb8{
       display: inline-block;
         background-color: #4d0fb8;
         border-radius: 50%;
@@ -255,7 +303,15 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_language .circle8{
+    /* .each_language .circle7{
+      display: inline-block;
+        background-color: #4d0fb8;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
+    .each_language .circle2f0b6e{
       display: inline-block;
         background-color: #2f0b6e;
         border-radius: 50%;
@@ -263,6 +319,14 @@ body{
         height: 12px;
         margin-right: 4px;
     }
+    /* .each_language .circle8{
+      display: inline-block;
+        background-color: #2f0b6e;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    } */
     .each_language li{
         font-size: 14px;
         margin: 12px;
