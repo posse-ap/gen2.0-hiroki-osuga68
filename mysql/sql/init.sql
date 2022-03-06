@@ -78,6 +78,9 @@ INSERT INTO learning_details (learning_date, learning_hour, learning_language_id
 ('2022/3/1', 3, 3, 2),
 ('2022/3/3', 7, 1, 2),
 ('2022/3/5', 5, 3, 1);
+
+INSERT INTO learning_details (learning_date, learning_hour, learning_language_id, learning_content_id) VALUES
+('2022/3/10', 5, 3, 3);
 -- +----------------------+----------+------+-----+---------+----------------+
 -- | Field                | Type     | Null | Key | Default | Extra          |
 -- +----------------------+----------+------+-----+---------+----------------+

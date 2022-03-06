@@ -153,11 +153,9 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                                         //グラフのデータ
                                         //   課題・・・dataの中に、24番目（25日）に5(h)をいれたい
                                         data: [
-                                            <?php foreach ($bargraph_data as $each_bargraph_data) : ?>
+                                            <?php foreach ($initial_data as $value) : ?>
                                                 <?php
-                                                $each_date = $each_bargraph_data['learning_date'];
-                                                $each_date_day = date('d', strtotime($each_date));
-                                                echo $each_bargraph_data['learning_hour'] . ',';
+                                                echo $value . ',';
                                                 ?>
                                             <?php endforeach; ?>
                                         ]

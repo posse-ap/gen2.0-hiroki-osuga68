@@ -14,15 +14,19 @@ $bargraph_data = $stmt->fetchAll();
 // |  8 | 2022-03-05 00:00:00 |             5 |                    3 |                   1 |
 // +----+---------------------+---------------+----------------------+---------------------+
 
+// 31日分の空データを用意、後で指定場所を削除して新たなデータを追加する
+$initial_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 foreach ($bargraph_data as $each_bargraph_data) : ?>
     <?php
+
     $each_date = $each_bargraph_data['learning_date'];
     $each_date_day = date('d', strtotime($each_date));
-    //   print_r($each_date_day);
-    //   25, 26, 27, 28と表示
+    array_splice($initial_data, $each_date_day - 1, 1, $each_bargraph_data['learning_hour']);
     ?>
       <?php endforeach; ?>
 
+      
 <?php
 // 2.学習言語についての処理
 $stmt = $dbh->query(
