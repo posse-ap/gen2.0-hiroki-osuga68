@@ -30,11 +30,14 @@ require("./chart_db_fetch.php");
     $stmt = $dbh->query("SELECT * FROM learning_contents");
     $learning_contents = $stmt->fetchAll();
 
+// プレースホルダー・・・SQL文に対して後から値をセットするための場所を確保する機能
+        // → ? または : で表現される
+        // データベースの情報が漏洩する危険性を阻止するため
+
     // 学習詳細テーブルから学習日カラムの中のTodayデータをwhereとし、学習時間を取得する
     $stmt = $dbh->query("SELECT learning_hour FROM learning_details WHERE learning_date = DATE(now())");
     $today_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
-        // print_r($today_learning_hour) 2/27のデータ6時間がとれていること確認
-    
+
     // 学習詳細テーブルから学習日カラムの中のmonthデータをwhereとし、学習時間を取得する
     //  DATE_FORMAT()関数・・・1つ目の引数に指定した日付け、2つ目の引数に整形したい型の指定
         // %Y・・・年を数字4桁 %m・・・月を数字（00～12で）
@@ -45,13 +48,7 @@ require("./chart_db_fetch.php");
     $stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details;");
     $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
     // ユーザーが入力する想定である学習詳細の内容については、prepare('SQL文')でSQL文の準備
-    // プレースホルダー・・・SQL文に対して後から値をセットするための場所を確保する機能
-        // → ? または : で表現される
-        // データベースの情報が漏洩する危険性を阻止するため
-
-    // bindvalue()とは、プリペアドステートメントで使用するSQL文の中で、変数の値をバインドするための関数
     
-
 ?>
 
 <html lang="ja">
@@ -120,9 +117,9 @@ require("./chart_db_fetch.php");
             <section class="bargraph">
                 <div style="position: relative; height:auto; width:100%">
                     <canvas id="myBar2Chart">
-                        <!-- グラフはここに差し込む -->
+                        <!-- jsグラフをphpファイルで読み込む -->
                         <script type="text/javascript">
-                            //棒グラフ2
+                            //日ごとの学習時間を示す棒グラフ
 var ctx = document.getElementById("myBar2Chart").getContext("2d");;
 
 var blue_gradient = ctx.createLinearGradient(0, 0, 0, 600);
@@ -155,20 +152,16 @@ var myBar2Chart = new Chart(ctx, {
               borderRadius: 10,
               borderSkipped: false,
               //グラフのデータ
-                //   dataの中に、24番目（25日）に5(h)をいれたい
-      data: [<?php foreach($bargraph_data as $each_bargraph_data):?>
+                //   課題・・・dataの中に、24番目（25日）に5(h)をいれたい
+      data: [
+    <?php foreach($bargraph_data as $each_bargraph_data):?>
     <?php
       $each_date = $each_bargraph_data['learning_date'];
       $each_date_day = date('d', strtotime($each_date));
-      echo $each_bargraph_data['learning_hour'];
-      echo ',';
+      echo $each_bargraph_data['learning_hour'].',';
       ?>
       <?php endforeach; ?>
-      
       ]
-    
-              
-            //   data: [2, 1, 3, 5, 2, 3, 5, 7, 5, 4, 3, 6, 8, 7, 4, 7, 5, 2, 6, 3, 5, 2, 3, 5, 7, 6, 4, 3, 1, 4]
           }
       ]
   },
@@ -240,7 +233,8 @@ var myBar2Chart = new Chart(ctx, {
                 <div class="languages_graph" style="position: relative; height:46%; width:80%">
                     <canvas id="myChart">
                         <!-- <div id="donutchart1" style="width: 100%; height: 300px;"> -->
-                        <!-- グラフはここに差し込む -->
+
+                        <!-- jsグラフをphpファイルで読み込む -->
                         <script type="text/javascript">
                             
                             var dataLabelPlugin = {
@@ -306,28 +300,19 @@ var chart = new Chart(myChart, {
       <?php endforeach; ?>
             ],
             data: [
-                // 50, 50, 40, 52, 47, 46, 26, 20
-                <?php foreach($sum_learning_hour as $each_sum_learning_hour):?>
+                <?php foreach($sum_language_hours as $each_sum_language_hour):?>
                     <?php
-                    // 最初のkeyがsum(learning_hour)になってる。。。？
-                    echo $each_sum_learning_hour[0].",";
-                    // print_r($each_sum_learning_hour);
+                    // 最初のkeyがsum(learning_hour)になってる。。。
+                    echo $each_sum_language_hour[0].",";
                     ?>
                 <?php endforeach; ?>
             ],
         }]
     },
     options: {
-        // legendCallback: function(chart) {
-        //     // ここでHTML文字列を返します。
-        // }
         responsive: true,
         legend:{position:"bottom",
         display: false
-        // labels:{filter: function(items) {
-        //     return items.text != 'JavaScript';
-        //     // return items.datasetIndex != 2;
-        //   }}
         },
         maintainAspectRatio: false,
     },
@@ -350,14 +335,98 @@ var chart = new Chart(myChart, {
                 <div class="contents_graph" style="position: relative; height:46%; width:80%">
                     <canvas id="myChart3">
                         <!-- <div id="donutchart" style="width: 100%; height: 300px;"> -->
-                        <!-- グラフはここに差し込む -->
+
+                       <!-- jsグラフをphpファイルで読み込む -->
+                        <script type="text/javascript">
+                            var dataLabelPlugin = {
+    afterDatasetsDraw: function (chart, easing) {
+        // To only draw at the end of animation, check for easing === 1
+        var ctx = chart.ctx;
+
+        chart.data.datasets.forEach(function (dataset, i) {
+            var dataSum = 0;
+            dataset.data.forEach(function (element){
+                dataSum += element;
+            });
+
+            var meta = chart.getDatasetMeta(i);
+            if (!meta.hidden) {
+                meta.data.forEach(function (element, index) {
+                    // Draw the text in black, with the specified font
+                    ctx.fillStyle = 'rgb(255, 255, 255)';
+
+                    var fontSize = 12;
+                    var fontStyle = 'normal';
+                    var fontFamily = 'Helvetica Neue';
+                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+                    // Just naively convert to string for now
+                    var labelString = chart.data.labels[index];
+                    var dataString = (Math.round(dataset.data[index] / dataSum * 1000)/10).toString() + "%";
+
+                    // Make sure alignment settings are correct
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    var padding = 5;
+                    var position = element.tooltipPosition();
+                    // ctx.fillText(labelString, position.x, position.y - (fontSize / 2) - padding);
+                    ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
+                });
+            }
+        });
+    }
+};
+
+// Chart
+var myChart = "myChart3";
+var chart = new Chart(myChart, {
+    type: 'doughnut',
+    data: {
+        labels: [
+            // "ドットインストール", "N予備校", "POSSE課題"
+            <?php foreach($unique2 as $value):?>
+       <?php
+      echo $value;
+      ?>
+      <?php endforeach; ?>
+        ],
+        datasets: [{
+            label: "Sample",
+            backgroundColor: [
+                // "#0b03fc", "#1077a3", "#19b4c2"
+                <?php foreach($unique3 as $value):?>
+       <?php
+      echo $value;
+      ?>
+      <?php endforeach; ?>
+            ],
+            data: [
+                // 42, 33, 25
+                <?php foreach($sum_content_hours as $each_sum_content_hour):?>
+                    <?php
+                    echo $each_sum_content_hour[0].",";
+                    ?>
+                <?php endforeach; ?>
+            ],
+
+            
+        }]
+    },
+    options: {
+        responsive: true,
+        legend:{position:"bottom",
+        display: false
+        },
+        maintainAspectRatio: false,
+    },
+    plugins: [dataLabelPlugin],
+});
+                        </script>
                         <!-- </div> -->
                     </canvas>
                 </div>
                 <ul class="each_content">
-                    <!-- <li><span class="circle1"></span>ドットインストール</li>
-                    <li><span class="circle2"></span>N予備校</li>
-                    <li><span class="circle3"></span>POSSE課題</li> -->
                     <?php foreach($learning_contents as $learning_content):?>
                         <li><span class="circle<?php print($learning_content['content_color'])?>"></span><?php print($learning_content['learning_content'])?></li>
                         <?php endforeach; ?>
