@@ -3,52 +3,52 @@ require("./db_connect.php");
 require("./chart_db_fetch.php");
 // SQLステートメントの実行
 
-  //1つ目・・・query(SQL文)
-      // 結果をPDOStatementオブジェクトとして返す
-      // 即時実行、ユーザからの入力をSQL文に含めることが出来ない
+//1つ目・・・query(SQL文)
+// 結果をPDOStatementオブジェクトとして返す
+// 即時実行、ユーザからの入力をSQL文に含めることが出来ない
 
-  // 2つ目・・・prepare('SQL文')でSQL文の準備、excuteメソッドで実行
-      //いずれも、結果をPDOStatementオブジェクトとして返す
-      // ユーザ入力値をパラメータに指定する場合は、必ずプリペアドステートメントを使う
-      //SQL文で値がいつでも変更できるように、変更する箇所だけ変数のようにした命令文を作る仕組み
+// 2つ目・・・prepare('SQL文')でSQL文の準備、excuteメソッドで実行
+//いずれも、結果をPDOStatementオブジェクトとして返す
+// ユーザ入力値をパラメータに指定する場合は、必ずプリペアドステートメントを使う
+//SQL文で値がいつでも変更できるように、変更する箇所だけ変数のようにした命令文を作る仕組み
 
 // dbデータの取得
 
-    // queryやexcuteメソッドでSQL文を実行しただけでは、その結果が戻り値として返されるだけ
-    // fetch、fetchAllメソッド
-    // dbからデータを取り出した際の「配列の形式を指定するモード」＝"フェッチモード"を任意で指定
-    // fetch()やfetchAll()の引数として指定することで、無駄なく必要なデータだけ取り出すことが可能
+// queryやexcuteメソッドでSQL文を実行しただけでは、その結果が戻り値として返されるだけ
+// fetch、fetchAllメソッド
+// dbからデータを取り出した際の「配列の形式を指定するモード」＝"フェッチモード"を任意で指定
+// fetch()やfetchAll()の引数として指定することで、無駄なく必要なデータだけ取り出すことが可能
 
-      // ①FETCH_BOTH：【配列のキー】カラム名＆連番、デフォルトモード。連番、カラム双方からデータにアクセスできるがデータ量が2倍で多い
-      // ②FETCH_ASSOC：【配列のキー】カラム名のみ、基本これがおススメ
-      // ③FETCH_KEY_PAIR：指定した2つのカラムを「キー／値」のペアの配列にする、特定の2カラムだけ取り出したいならこれ
-      // ④FETCH_COLUMN：指定した1つのカラムだけを1次元配列で取得 、1カラムだけ取り出したいならこれ
+// ①FETCH_BOTH：【配列のキー】カラム名＆連番、デフォルトモード。連番、カラム双方からデータにアクセスできるがデータ量が2倍で多い
+// ②FETCH_ASSOC：【配列のキー】カラム名のみ、基本これがおススメ
+// ③FETCH_KEY_PAIR：指定した2つのカラムを「キー／値」のペアの配列にする、特定の2カラムだけ取り出したいならこれ
+// ④FETCH_COLUMN：指定した1つのカラムだけを1次元配列で取得 、1カラムだけ取り出したいならこれ
 
-    $stmt = $dbh->query("SELECT * FROM learning_languages");
-    $learning_languages = $stmt->fetchAll();
-        //   print_r($learning_languages)
-    $stmt = $dbh->query("SELECT * FROM learning_contents");
-    $learning_contents = $stmt->fetchAll();
+$stmt = $dbh->query("SELECT * FROM learning_languages");
+$learning_languages = $stmt->fetchAll();
+//   print_r($learning_languages)
+$stmt = $dbh->query("SELECT * FROM learning_contents");
+$learning_contents = $stmt->fetchAll();
 
 // プレースホルダー・・・SQL文に対して後から値をセットするための場所を確保する機能
-        // → ? または : で表現される
-        // データベースの情報が漏洩する危険性を阻止するため
+// → ? または : で表現される
+// データベースの情報が漏洩する危険性を阻止するため
 
-    // 学習詳細テーブルから学習日カラムの中のTodayデータをwhereとし、学習時間を取得する
-    $stmt = $dbh->query("SELECT learning_hour FROM learning_details WHERE learning_date = DATE(now())");
-    $today_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
+// 学習詳細テーブルから学習日カラムの中のTodayデータをwhereとし、学習時間を取得する
+$stmt = $dbh->query("SELECT learning_hour FROM learning_details WHERE learning_date = DATE(now())");
+$today_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
 
-    // 学習詳細テーブルから学習日カラムの中のmonthデータをwhereとし、学習時間を取得する
-    //  DATE_FORMAT()関数・・・1つ目の引数に指定した日付け、2つ目の引数に整形したい型の指定
-        // %Y・・・年を数字4桁 %m・・・月を数字（00～12で）
-    $stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details WHERE DATE_FORMAT(learning_date, '%Y%m') = DATE_FORMAT(now(), '%Y%m')");
-    $month_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
+// 学習詳細テーブルから学習日カラムの中のmonthデータをwhereとし、学習時間を取得する
+//  DATE_FORMAT()関数・・・1つ目の引数に指定した日付け、2つ目の引数に整形したい型の指定
+// %Y・・・年を数字4桁 %m・・・月を数字（00～12で）
+$stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details WHERE DATE_FORMAT(learning_date, '%Y%m') = DATE_FORMAT(now(), '%Y%m')");
+$month_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
 
-    // 学習詳細テーブルから学習日カラムの中の合計データをwhereとし、学習時間を取得する
-    $stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details;");
-    $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
-    // ユーザーが入力する想定である学習詳細の内容については、prepare('SQL文')でSQL文の準備
-    
+// 学習詳細テーブルから学習日カラムの中の合計データをwhereとし、学習時間を取得する
+$stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details;");
+$total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
+// ユーザーが入力する想定である学習詳細の内容については、prepare('SQL文')でSQL文の準備
+
 ?>
 
 <html lang="ja">
@@ -100,17 +100,17 @@ require("./chart_db_fetch.php");
             <div class="date">
                 <section>
                     <p class="subtitle">Today</p>
-                    <p class="number"><?php print_r($today_learning_hour)?></p>
+                    <p class="number"><?php echo $today_learning_hour; ?></p>
                     <p class="hour">hour</p>
                 </section>
                 <section>
                     <p class="subtitle">Month</p>
-                    <p class="number"><?php print_r($month_learning_hour)?></p>
+                    <p class="number"><?php echo $month_learning_hour; ?></p>
                     <p class="hour">hour</p>
                 </section>
                 <section>
                     <p class="subtitle">Total</p>
-                    <p class="number"><?php print_r($total_learning_hour)?></p>
+                    <p class="number"><?php echo $total_learning_hour; ?></p>
                     <p class="hour">hour</p>
                 </section>
             </div>
@@ -120,106 +120,104 @@ require("./chart_db_fetch.php");
                         <!-- jsグラフをphpファイルで読み込む -->
                         <script type="text/javascript">
                             //日ごとの学習時間を示す棒グラフ
-var ctx = document.getElementById("myBar2Chart").getContext("2d");;
+                            var ctx = document.getElementById("myBar2Chart").getContext("2d");;
 
-var blue_gradient = ctx.createLinearGradient(0, 0, 0, 600);
-blue_gradient.addColorStop(0, "#3DCEFE");
-blue_gradient.addColorStop(1, "#0056c0");
+                            var blue_gradient = ctx.createLinearGradient(0, 0, 0, 600);
+                            blue_gradient.addColorStop(0, "#3DCEFE");
+                            blue_gradient.addColorStop(1, "#0056c0");
 
-var myBar2Chart = new Chart(ctx, {
-  //グラフの種類
-  type: 'bar',
-  //データの設定
-  data: {
-      //データ項目のラベル
-      labels: ["", "2", "", "4", "", "6", "", "8", "", "10", "", "12", "", "14", "", "16", "", "18", "", "20", "", "22", "", "24", "", "26", "", "28", "", "30"],
-      //データセット
-      datasets: [
-          {
-              //凡例
-              label: "学習時間",
-              //背景色
-              // backgroundColor: "rgba(179,181,198,0.2)",
-              backgroundColor: blue_gradient,
-              //枠線の色
-              borderColor: blue_gradient,
-              //枠線の太さ
-              borderWidth: 1,
-              //背景色（ホバーしたときに）
-              hoverBackgroundColor: "rgba(0, 191, 255, 0.4)",
-              //枠線の色（ホバーしたときに）
-              hoverBorderColor: "rgba(0, 191, 255, 0.4)",
-              borderRadius: 10,
-              borderSkipped: false,
-              //グラフのデータ
-                //   課題・・・dataの中に、24番目（25日）に5(h)をいれたい
-      data: [
-    <?php foreach($bargraph_data as $each_bargraph_data):?>
-    <?php
-      $each_date = $each_bargraph_data['learning_date'];
-      $each_date_day = date('d', strtotime($each_date));
-      echo $each_bargraph_data['learning_hour'].',';
-      ?>
-      <?php endforeach; ?>
-      ]
-          }
-      ]
-  },
-  
-  //オプションの設定
-  options: {
-        legend: {
-        display: false
-        },
-      //軸の設定
-      scales: {
-        xAxes:[{
-          gridLines: {
-            //x軸の網線
-            display: false
-          },
-        }],
-          //縦軸の設定
-          yAxes: [{
-              //目盛りの設定
-              ticks: {
-                  //開始値を0にする
-                    beginAtZero:true,
-                    min: 0,                        // 最小値
-                    max: 8,                       // 最大値
-                    stepSize: 2,                   // 軸間隔
-                    fontColor: "rgb(65, 105, 225)",             // 目盛りの色
-                    fontSize: 10,                   // フォントサイズ
-                    callback: function(value, index, values){
-                      return  value +  'h'
-                    }
-              },
-              gridLines:{
-                display:false,
-            },
-            // scaleLabel: {              //軸ラベル設定
-            //     display: true,          //表示設定
-            //     labelString: '勉強時間',  //ラベル
-            //     fontSize: 10               //フォントサイズ
-            //  }
-          }]
-      },
-      //ホバーの設定
-      hover: {
-          //ホバー時の動作（single, label, dataset）
-          mode: 'single'
-      },
-      layout: {                          // 全体のレイアウト
-        padding: {                         // 余白
-            left: 10,
-            right: 10,
-            top: 10,
-            bottom: 0
-        }
-    }
-      
-  }
-});
+                            var myBar2Chart = new Chart(ctx, {
+                                //グラフの種類
+                                type: 'bar',
+                                //データの設定
+                                data: {
+                                    //データ項目のラベル
+                                    labels: ["", "2", "", "4", "", "6", "", "8", "", "10", "", "12", "", "14", "", "16", "", "18", "", "20", "", "22", "", "24", "", "26", "", "28", "", "30"],
+                                    //データセット
+                                    datasets: [{
+                                        //凡例
+                                        label: "学習時間",
+                                        //背景色
+                                        // backgroundColor: "rgba(179,181,198,0.2)",
+                                        backgroundColor: blue_gradient,
+                                        //枠線の色
+                                        borderColor: blue_gradient,
+                                        //枠線の太さ
+                                        borderWidth: 1,
+                                        //背景色（ホバーしたときに）
+                                        hoverBackgroundColor: "rgba(0, 191, 255, 0.4)",
+                                        //枠線の色（ホバーしたときに）
+                                        hoverBorderColor: "rgba(0, 191, 255, 0.4)",
+                                        borderRadius: 10,
+                                        borderSkipped: false,
+                                        //グラフのデータ
+                                        //   課題・・・dataの中に、24番目（25日）に5(h)をいれたい
+                                        data: [
+                                            <?php foreach ($bargraph_data as $each_bargraph_data) : ?>
+                                                <?php
+                                                $each_date = $each_bargraph_data['learning_date'];
+                                                $each_date_day = date('d', strtotime($each_date));
+                                                echo $each_bargraph_data['learning_hour'] . ',';
+                                                ?>
+                                            <?php endforeach; ?>
+                                        ]
+                                    }]
+                                },
+
+                                //オプションの設定
+                                options: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    //軸の設定
+                                    scales: {
+                                        xAxes: [{
+                                            gridLines: {
+                                                //x軸の網線
+                                                display: false
+                                            },
+                                        }],
+                                        //縦軸の設定
+                                        yAxes: [{
+                                            //目盛りの設定
+                                            ticks: {
+                                                //開始値を0にする
+                                                beginAtZero: true,
+                                                min: 0, // 最小値
+                                                max: 8, // 最大値
+                                                stepSize: 2, // 軸間隔
+                                                fontColor: "rgb(65, 105, 225)", // 目盛りの色
+                                                fontSize: 10, // フォントサイズ
+                                                callback: function(value, index, values) {
+                                                    return value + 'h'
+                                                }
+                                            },
+                                            gridLines: {
+                                                display: false,
+                                            },
+                                            // scaleLabel: {              //軸ラベル設定
+                                            //     display: true,          //表示設定
+                                            //     labelString: '勉強時間',  //ラベル
+                                            //     fontSize: 10               //フォントサイズ
+                                            //  }
+                                        }]
+                                    },
+                                    //ホバーの設定
+                                    hover: {
+                                        //ホバー時の動作（single, label, dataset）
+                                        mode: 'single'
+                                    },
+                                    layout: { // 全体のレイアウト
+                                        padding: { // 余白
+                                            left: 10,
+                                            right: 10,
+                                            top: 10,
+                                            bottom: 0
+                                        }
+                                    }
+
+                                }
+                            });
                         </script>
                     </canvas>
 
@@ -236,98 +234,97 @@ var myBar2Chart = new Chart(ctx, {
 
                         <!-- jsグラフをphpファイルで読み込む -->
                         <script type="text/javascript">
-                            
                             var dataLabelPlugin = {
-    afterDatasetsDraw: function (chart, easing) {
-        // To only draw at the end of animation, check for easing === 1
-        var ctx = chart.ctx;
+                                afterDatasetsDraw: function(chart, easing) {
+                                    // To only draw at the end of animation, check for easing === 1
+                                    var ctx = chart.ctx;
 
-        chart.data.datasets.forEach(function (dataset, i) {
-            var dataSum = 0;
-            dataset.data.forEach(function (element){
-                dataSum += element;
-            });
+                                    chart.data.datasets.forEach(function(dataset, i) {
+                                        var dataSum = 0;
+                                        dataset.data.forEach(function(element) {
+                                            dataSum += element;
+                                        });
 
-            var meta = chart.getDatasetMeta(i);
-            if (!meta.hidden) {
-                meta.data.forEach(function (element, index) {
-                    // Draw the text in black, with the specified font
-                    ctx.fillStyle = 'rgb(255, 255, 255)';
+                                        var meta = chart.getDatasetMeta(i);
+                                        if (!meta.hidden) {
+                                            meta.data.forEach(function(element, index) {
+                                                // Draw the text in black, with the specified font
+                                                ctx.fillStyle = 'rgb(255, 255, 255)';
 
-                    var fontSize = 10;
-                    var fontStyle = 'normal';
-                    var fontFamily = 'Helvetica Neue';
-                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                                var fontSize = 10;
+                                                var fontStyle = 'normal';
+                                                var fontFamily = 'Helvetica Neue';
+                                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-                    // Just naively convert to string for now
-                    var labelString = chart.data.labels[index];
-                    var dataString = (Math.round(dataset.data[index] / dataSum * 1000)/10).toString() + "%";
-                    // Make sure alignment settings are correct
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
+                                                // Just naively convert to string for now
+                                                var labelString = chart.data.labels[index];
+                                                var dataString = (Math.round(dataset.data[index] / dataSum * 1000) / 10).toString() + "%";
+                                                // Make sure alignment settings are correct
+                                                ctx.textAlign = 'center';
+                                                ctx.textBaseline = 'middle';
 
-                    var padding = 5;
-                    var position = element.tooltipPosition();
-                    // ctx.fillText(labelString, position.x, position.y - (fontSize / 2) - padding);
-                    ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
-                });
-            }
-        });
-    }
-};
+                                                var padding = 5;
+                                                var position = element.tooltipPosition();
+                                                // ctx.fillText(labelString, position.x, position.y - (fontSize / 2) - padding);
+                                                ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
+                                            });
+                                        }
+                                    });
+                                }
+                            };
 
-// Chart
-var myChart = "myChart";
-var chart = new Chart(myChart, {
-    type: 'doughnut',
-    data: {
-        labels: [
-            // "JavaScript", "CSS", "PHP", "HTML", "Laravel", "SQL", "SHELL", "情報system基礎知識（その他）"
-            <?php foreach($unique as $value):?>
-       <?php
-      echo $value;
-      ?>
-      <?php endforeach; ?>
-        ],
-        datasets: [{
-            label: "学習言語",
-            backgroundColor: [
-                // "#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"
-                <?php foreach($unique1 as $value):?>
-       <?php
-      echo $value;
-      ?>
-      <?php endforeach; ?>
-            ],
-            data: [
-                <?php foreach($sum_language_hours as $each_sum_language_hour):?>
-                    <?php
-                    // 最初のkeyがsum(learning_hour)になってる。。。
-                    echo $each_sum_language_hour[0].",";
-                    ?>
-                <?php endforeach; ?>
-            ],
-        }]
-    },
-    options: {
-        responsive: true,
-        legend:{position:"bottom",
-        display: false
-        },
-        maintainAspectRatio: false,
-    },
-    plugins: [dataLabelPlugin]
-});
-
+                            // Chart
+                            var myChart = "myChart";
+                            var chart = new Chart(myChart, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: [
+                                        // "JavaScript", "CSS", "PHP", "HTML", "Laravel", "SQL", "SHELL", "情報system基礎知識（その他）"
+                                        <?php foreach ($unique as $value) : ?>
+                                            <?php
+                                            echo $value;
+                                            ?>
+                                        <?php endforeach; ?>
+                                    ],
+                                    datasets: [{
+                                        label: "学習言語",
+                                        backgroundColor: [
+                                            // "#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"
+                                            <?php foreach ($unique1 as $value) : ?>
+                                                <?php
+                                                echo $value;
+                                                ?>
+                                            <?php endforeach; ?>
+                                        ],
+                                        data: [
+                                            <?php foreach ($sum_language_hours as $each_sum_language_hour) : ?>
+                                                <?php
+                                                // 最初のkeyがsum(learning_hour)になってる。。。
+                                                echo $each_sum_language_hour[0] . ",";
+                                                ?>
+                                            <?php endforeach; ?>
+                                        ],
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    legend: {
+                                        position: "bottom",
+                                        display: false
+                                    },
+                                    maintainAspectRatio: false,
+                                },
+                                plugins: [dataLabelPlugin]
+                            });
                         </script>
                         <!-- </div> -->
                     </canvas>
                 </div>
 
                 <ul class="each_language">
-                    <?php foreach($learning_languages as $learning_language):?>
-                        <li><span class="circle<?php print($learning_language['language_color']) ?>"></span><?php print($learning_language['learning_language'])?></li>
-                        <?php endforeach; ?>     
+                    <?php foreach ($learning_languages as $learning_language) : ?>
+                        <li><span class="circle<?php print($learning_language['language_color']) ?>"></span><?php print($learning_language['learning_language']) ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </section>
             <section class="learning_contents_area">
@@ -336,100 +333,101 @@ var chart = new Chart(myChart, {
                     <canvas id="myChart3">
                         <!-- <div id="donutchart" style="width: 100%; height: 300px;"> -->
 
-                       <!-- jsグラフをphpファイルで読み込む -->
+                        <!-- jsグラフをphpファイルで読み込む -->
                         <script type="text/javascript">
                             var dataLabelPlugin = {
-    afterDatasetsDraw: function (chart, easing) {
-        // To only draw at the end of animation, check for easing === 1
-        var ctx = chart.ctx;
+                                afterDatasetsDraw: function(chart, easing) {
+                                    // To only draw at the end of animation, check for easing === 1
+                                    var ctx = chart.ctx;
 
-        chart.data.datasets.forEach(function (dataset, i) {
-            var dataSum = 0;
-            dataset.data.forEach(function (element){
-                dataSum += element;
-            });
+                                    chart.data.datasets.forEach(function(dataset, i) {
+                                        var dataSum = 0;
+                                        dataset.data.forEach(function(element) {
+                                            dataSum += element;
+                                        });
 
-            var meta = chart.getDatasetMeta(i);
-            if (!meta.hidden) {
-                meta.data.forEach(function (element, index) {
-                    // Draw the text in black, with the specified font
-                    ctx.fillStyle = 'rgb(255, 255, 255)';
+                                        var meta = chart.getDatasetMeta(i);
+                                        if (!meta.hidden) {
+                                            meta.data.forEach(function(element, index) {
+                                                // Draw the text in black, with the specified font
+                                                ctx.fillStyle = 'rgb(255, 255, 255)';
 
-                    var fontSize = 12;
-                    var fontStyle = 'normal';
-                    var fontFamily = 'Helvetica Neue';
-                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                                var fontSize = 12;
+                                                var fontStyle = 'normal';
+                                                var fontFamily = 'Helvetica Neue';
+                                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-                    // Just naively convert to string for now
-                    var labelString = chart.data.labels[index];
-                    var dataString = (Math.round(dataset.data[index] / dataSum * 1000)/10).toString() + "%";
+                                                // Just naively convert to string for now
+                                                var labelString = chart.data.labels[index];
+                                                var dataString = (Math.round(dataset.data[index] / dataSum * 1000) / 10).toString() + "%";
 
-                    // Make sure alignment settings are correct
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
+                                                // Make sure alignment settings are correct
+                                                ctx.textAlign = 'center';
+                                                ctx.textBaseline = 'middle';
 
-                    var padding = 5;
-                    var position = element.tooltipPosition();
-                    // ctx.fillText(labelString, position.x, position.y - (fontSize / 2) - padding);
-                    ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
-                });
-            }
-        });
-    }
-};
+                                                var padding = 5;
+                                                var position = element.tooltipPosition();
+                                                // ctx.fillText(labelString, position.x, position.y - (fontSize / 2) - padding);
+                                                ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
+                                            });
+                                        }
+                                    });
+                                }
+                            };
 
-// Chart
-var myChart = "myChart3";
-var chart = new Chart(myChart, {
-    type: 'doughnut',
-    data: {
-        labels: [
-            // "ドットインストール", "N予備校", "POSSE課題"
-            <?php foreach($unique2 as $value):?>
-       <?php
-      echo $value;
-      ?>
-      <?php endforeach; ?>
-        ],
-        datasets: [{
-            label: "Sample",
-            backgroundColor: [
-                // "#0b03fc", "#1077a3", "#19b4c2"
-                <?php foreach($unique3 as $value):?>
-       <?php
-      echo $value;
-      ?>
-      <?php endforeach; ?>
-            ],
-            data: [
-                // 42, 33, 25
-                <?php foreach($sum_content_hours as $each_sum_content_hour):?>
-                    <?php
-                    echo $each_sum_content_hour[0].",";
-                    ?>
-                <?php endforeach; ?>
-            ],
+                            // Chart
+                            var myChart = "myChart3";
+                            var chart = new Chart(myChart, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: [
+                                        // "ドットインストール", "N予備校", "POSSE課題"
+                                        <?php foreach ($unique2 as $value) : ?>
+                                            <?php
+                                            echo $value;
+                                            ?>
+                                        <?php endforeach; ?>
+                                    ],
+                                    datasets: [{
+                                        label: "Sample",
+                                        backgroundColor: [
+                                            // "#0b03fc", "#1077a3", "#19b4c2"
+                                            <?php foreach ($unique3 as $value) : ?>
+                                                <?php
+                                                echo $value;
+                                                ?>
+                                            <?php endforeach; ?>
+                                        ],
+                                        data: [
+                                            // 42, 33, 25
+                                            <?php foreach ($sum_content_hours as $each_sum_content_hour) : ?>
+                                                <?php
+                                                echo $each_sum_content_hour[0] . ",";
+                                                ?>
+                                            <?php endforeach; ?>
+                                        ],
 
-            
-        }]
-    },
-    options: {
-        responsive: true,
-        legend:{position:"bottom",
-        display: false
-        },
-        maintainAspectRatio: false,
-    },
-    plugins: [dataLabelPlugin],
-});
+
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    legend: {
+                                        position: "bottom",
+                                        display: false
+                                    },
+                                    maintainAspectRatio: false,
+                                },
+                                plugins: [dataLabelPlugin],
+                            });
                         </script>
                         <!-- </div> -->
                     </canvas>
                 </div>
                 <ul class="each_content">
-                    <?php foreach($learning_contents as $learning_content):?>
-                        <li><span class="circle<?php print($learning_content['content_color'])?>"></span><?php print($learning_content['learning_content'])?></li>
-                        <?php endforeach; ?>
+                    <?php foreach ($learning_contents as $learning_content) : ?>
+                        <li><span class="circle<?php print($learning_content['content_color']) ?>"></span><?php print($learning_content['learning_content']) ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </section>
         </div>
@@ -465,35 +463,23 @@ var chart = new Chart(myChart, {
                         <div>
                             <div class="modal_small_title">学習コンテンツ（複数選択可）</div>
                             <ul class="check_contents">
-                                <li><label id="check_area1"><input type="checkbox" name="learning" value="N予備校"><span
-                                            id="checkbox1" class="fas fa-check-circle check_style"></span>N予備校</label>
+                                <li><label id="check_area1"><input type="checkbox" name="learning" value="N予備校"><span id="checkbox1" class="fas fa-check-circle check_style"></span>N予備校</label>
                                 </li>
-                                <li><label id="check_area2"><input type="checkbox" name="learning"
-                                            value="ドットインストール"><span id="checkbox2"
-                                            class="fas fa-check-circle check_style"></span>ドットインストール</label></li>
-                                <li><label id="check_area3"><input type="checkbox" name="learning" value="POSSE課題"><span
-                                            id="checkbox3"
-                                            class="fas fa-check-circle check_style"></span>POSSE課題</label></li>
+                                <li><label id="check_area2"><input type="checkbox" name="learning" value="ドットインストール"><span id="checkbox2" class="fas fa-check-circle check_style"></span>ドットインストール</label></li>
+                                <li><label id="check_area3"><input type="checkbox" name="learning" value="POSSE課題"><span id="checkbox3" class="fas fa-check-circle check_style"></span>POSSE課題</label></li>
                             </ul>
                         </div>
 
                         <div>
                             <div class="modal_small_title">学習言語（複数選択可）</div>
                             <ul class="check_contents">
-                                <li><label id="check_area4"><input type="checkbox" name="learning" value="HTML"><span id="checkbox4"
-                                            class="fas fa-check-circle check_style"></span>HTML</label></li>
-                                <li><label id="check_area5"><input type="checkbox" name="learning" value="CSS"><span id="checkbox5"
-                                            class="fas fa-check-circle check_style"></span>CSS</label></li>
-                                <li><label id="check_area6"><input type="checkbox" name="learning" value="JavaScript"><span id="checkbox6"
-                                            class="fas fa-check-circle check_style"></span>JavaScript</label></li>
-                                <li><label id="check_area7"><input type="checkbox" name="learning" value="PHP"><span id="checkbox7"
-                                            class="fas fa-check-circle check_style"></span>PHP</label></li>
-                                <li><label id="check_area8"><input type="checkbox" name="learning" value="Laravel"><span id="checkbox8"
-                                            class="fas fa-check-circle check_style"></span>Laravel</label></li>
-                                <li><label id="check_area9"><input type="checkbox" name="learning" value="SQL"><span id="checkbox9"
-                                            class="fas fa-check-circle check_style"></span>SQL</label></li>
-                                <li><label id="check_area10"><input type="checkbox" name="learning" value="SHELL"><span
-                                            id="checkbox10" class="fas fa-check-circle check_style"></span>SHELL</label></li>
+                                <li><label id="check_area4"><input type="checkbox" name="learning" value="HTML"><span id="checkbox4" class="fas fa-check-circle check_style"></span>HTML</label></li>
+                                <li><label id="check_area5"><input type="checkbox" name="learning" value="CSS"><span id="checkbox5" class="fas fa-check-circle check_style"></span>CSS</label></li>
+                                <li><label id="check_area6"><input type="checkbox" name="learning" value="JavaScript"><span id="checkbox6" class="fas fa-check-circle check_style"></span>JavaScript</label></li>
+                                <li><label id="check_area7"><input type="checkbox" name="learning" value="PHP"><span id="checkbox7" class="fas fa-check-circle check_style"></span>PHP</label></li>
+                                <li><label id="check_area8"><input type="checkbox" name="learning" value="Laravel"><span id="checkbox8" class="fas fa-check-circle check_style"></span>Laravel</label></li>
+                                <li><label id="check_area9"><input type="checkbox" name="learning" value="SQL"><span id="checkbox9" class="fas fa-check-circle check_style"></span>SQL</label></li>
+                                <li><label id="check_area10"><input type="checkbox" name="learning" value="SHELL"><span id="checkbox10" class="fas fa-check-circle check_style"></span>SHELL</label></li>
                                 <li><label id="check_area11"><input type="checkbox" name="learning" value="情報システム基礎知識"><span id="checkbox11" class="fas fa-check-circle check_style"></span>情報システム基礎知識（その他）</label></li>
                             </ul>
                         </div>
@@ -512,8 +498,7 @@ var chart = new Chart(myChart, {
                         </div>
 
                         <div class="confirm_twitter">
-                            <p><label id="check_area12"><input id="twitter_box" type="checkbox" name="learning"><span id="checkbox12"
-                                        class="fas fa-check-circle check_style"></span>Twitterにシェアする</label></p>
+                            <p><label id="check_area12"><input id="twitter_box" type="checkbox" name="learning"><span id="checkbox12" class="fas fa-check-circle check_style"></span>Twitterにシェアする</label></p>
                         </div>
                     </div>
 
