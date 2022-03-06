@@ -352,15 +352,15 @@ body{
       margin-top: 36px;
       margin-left: 12px;
   }
-  .each_content .circle1{
+  .each_content .circle0b03fc{
       display: inline-block;
-        background-color: blue;
+        background-color: #0b03fc;
         border-radius: 50%;
         width: 12px;
         height: 12px;
         margin-right: 4px;
     }
-    .each_content .circle2{
+    .each_content .circle1077a3{
       display: inline-block;
        
         background-color: #1077a3;
@@ -369,7 +369,7 @@ body{
         height: 12px;
         margin-right: 4px;
     }
-    .each_content .circle3{
+    .each_content .circle19b4c2{
       display: inline-block;
         
         background-color: #19b4c2;

@@ -10,6 +10,7 @@ require("./chart_db_fetch.php");
   // 2つ目・・・prepare('SQL文')でSQL文の準備、excuteメソッドで実行
       //いずれも、結果をPDOStatementオブジェクトとして返す
       // ユーザ入力値をパラメータに指定する場合は、必ずプリペアドステートメントを使う
+      //SQL文で値がいつでも変更できるように、変更する箇所だけ変数のようにした命令文を作る仕組み
 
 // dbデータの取得
 
@@ -23,9 +24,33 @@ require("./chart_db_fetch.php");
       // ③FETCH_KEY_PAIR：指定した2つのカラムを「キー／値」のペアの配列にする、特定の2カラムだけ取り出したいならこれ
       // ④FETCH_COLUMN：指定した1つのカラムだけを1次元配列で取得 、1カラムだけ取り出したいならこれ
 
-      $stmt = $dbh->query("SELECT * FROM learning_languages");
-      $learning_languages = $stmt->fetchAll();
-    //   print_r($learning_languages)
+    $stmt = $dbh->query("SELECT * FROM learning_languages");
+    $learning_languages = $stmt->fetchAll();
+        //   print_r($learning_languages)
+    $stmt = $dbh->query("SELECT * FROM learning_contents");
+    $learning_contents = $stmt->fetchAll();
+
+    // 学習詳細テーブルから学習日カラムの中のTodayデータをwhereとし、学習時間を取得する
+    $stmt = $dbh->query("SELECT learning_hour FROM learning_details WHERE learning_date = DATE(now())");
+    $today_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
+        // print_r($today_learning_hour) 2/27のデータ6時間がとれていること確認
+    
+    // 学習詳細テーブルから学習日カラムの中のmonthデータをwhereとし、学習時間を取得する
+    //  DATE_FORMAT()関数・・・1つ目の引数に指定した日付け、2つ目の引数に整形したい型の指定
+        // %Y・・・年を数字4桁 %m・・・月を数字（00～12で）
+    $stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details WHERE DATE_FORMAT(learning_date, '%Y%m') = DATE_FORMAT(now(), '%Y%m')");
+    $month_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
+
+    // 学習詳細テーブルから学習日カラムの中の合計データをwhereとし、学習時間を取得する
+    $stmt = $dbh->query("SELECT sum(learning_hour) FROM learning_details;");
+    $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN)?: 0;
+    // ユーザーが入力する想定である学習詳細の内容については、prepare('SQL文')でSQL文の準備
+    // プレースホルダー・・・SQL文に対して後から値をセットするための場所を確保する機能
+        // → ? または : で表現される
+        // データベースの情報が漏洩する危険性を阻止するため
+
+    // bindvalue()とは、プリペアドステートメントで使用するSQL文の中で、変数の値をバインドするための関数
+    
 
 ?>
 
@@ -78,17 +103,17 @@ require("./chart_db_fetch.php");
             <div class="date">
                 <section>
                     <p class="subtitle">Today</p>
-                    <p class="number">3</p>
+                    <p class="number"><?php print_r($today_learning_hour)?></p>
                     <p class="hour">hour</p>
                 </section>
                 <section>
                     <p class="subtitle">Month</p>
-                    <p class="number">120</p>
+                    <p class="number"><?php print_r($month_learning_hour)?></p>
                     <p class="hour">hour</p>
                 </section>
                 <section>
                     <p class="subtitle">Total</p>
-                    <p class="number">1348</p>
+                    <p class="number"><?php print_r($total_learning_hour)?></p>
                     <p class="hour">hour</p>
                 </section>
             </div>
@@ -96,7 +121,115 @@ require("./chart_db_fetch.php");
                 <div style="position: relative; height:auto; width:100%">
                     <canvas id="myBar2Chart">
                         <!-- グラフはここに差し込む -->
+                        <script type="text/javascript">
+                            //棒グラフ2
+var ctx = document.getElementById("myBar2Chart").getContext("2d");;
+
+var blue_gradient = ctx.createLinearGradient(0, 0, 0, 600);
+blue_gradient.addColorStop(0, "#3DCEFE");
+blue_gradient.addColorStop(1, "#0056c0");
+
+var myBar2Chart = new Chart(ctx, {
+  //グラフの種類
+  type: 'bar',
+  //データの設定
+  data: {
+      //データ項目のラベル
+      labels: ["", "2", "", "4", "", "6", "", "8", "", "10", "", "12", "", "14", "", "16", "", "18", "", "20", "", "22", "", "24", "", "26", "", "28", "", "30"],
+      //データセット
+      datasets: [
+          {
+              //凡例
+              label: "学習時間",
+              //背景色
+              // backgroundColor: "rgba(179,181,198,0.2)",
+              backgroundColor: blue_gradient,
+              //枠線の色
+              borderColor: blue_gradient,
+              //枠線の太さ
+              borderWidth: 1,
+              //背景色（ホバーしたときに）
+              hoverBackgroundColor: "rgba(0, 191, 255, 0.4)",
+              //枠線の色（ホバーしたときに）
+              hoverBorderColor: "rgba(0, 191, 255, 0.4)",
+              borderRadius: 10,
+              borderSkipped: false,
+              //グラフのデータ
+                //   dataの中に、24番目（25日）に5(h)をいれたい
+      data: [<?php foreach($bargraph_data as $each_bargraph_data):?>
+    <?php
+      $each_date = $each_bargraph_data['learning_date'];
+      $each_date_day = date('d', strtotime($each_date));
+      echo $each_bargraph_data['learning_hour'];
+      echo ',';
+      ?>
+      <?php endforeach; ?>
+      
+      ]
+    
+              
+            //   data: [2, 1, 3, 5, 2, 3, 5, 7, 5, 4, 3, 6, 8, 7, 4, 7, 5, 2, 6, 3, 5, 2, 3, 5, 7, 6, 4, 3, 1, 4]
+          }
+      ]
+  },
+  
+  //オプションの設定
+  options: {
+        legend: {
+        display: false
+        },
+      //軸の設定
+      scales: {
+        xAxes:[{
+          gridLines: {
+            //x軸の網線
+            display: false
+          },
+        }],
+          //縦軸の設定
+          yAxes: [{
+              //目盛りの設定
+              ticks: {
+                  //開始値を0にする
+                    beginAtZero:true,
+                    min: 0,                        // 最小値
+                    max: 8,                       // 最大値
+                    stepSize: 2,                   // 軸間隔
+                    fontColor: "rgb(65, 105, 225)",             // 目盛りの色
+                    fontSize: 10,                   // フォントサイズ
+                    callback: function(value, index, values){
+                      return  value +  'h'
+                    }
+              },
+              gridLines:{
+                display:false,
+            },
+            // scaleLabel: {              //軸ラベル設定
+            //     display: true,          //表示設定
+            //     labelString: '勉強時間',  //ラベル
+            //     fontSize: 10               //フォントサイズ
+            //  }
+          }]
+      },
+      //ホバーの設定
+      hover: {
+          //ホバー時の動作（single, label, dataset）
+          mode: 'single'
+      },
+      layout: {                          // 全体のレイアウト
+        padding: {                         // 余白
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 0
+        }
+    }
+      
+  }
+});
+                        </script>
                     </canvas>
+
                 </div>
             </section>
         </div>
@@ -108,23 +241,108 @@ require("./chart_db_fetch.php");
                     <canvas id="myChart">
                         <!-- <div id="donutchart1" style="width: 100%; height: 300px;"> -->
                         <!-- グラフはここに差し込む -->
+                        <script type="text/javascript">
+                            
+                            var dataLabelPlugin = {
+    afterDatasetsDraw: function (chart, easing) {
+        // To only draw at the end of animation, check for easing === 1
+        var ctx = chart.ctx;
+
+        chart.data.datasets.forEach(function (dataset, i) {
+            var dataSum = 0;
+            dataset.data.forEach(function (element){
+                dataSum += element;
+            });
+
+            var meta = chart.getDatasetMeta(i);
+            if (!meta.hidden) {
+                meta.data.forEach(function (element, index) {
+                    // Draw the text in black, with the specified font
+                    ctx.fillStyle = 'rgb(255, 255, 255)';
+
+                    var fontSize = 10;
+                    var fontStyle = 'normal';
+                    var fontFamily = 'Helvetica Neue';
+                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+                    // Just naively convert to string for now
+                    var labelString = chart.data.labels[index];
+                    var dataString = (Math.round(dataset.data[index] / dataSum * 1000)/10).toString() + "%";
+                    // Make sure alignment settings are correct
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    var padding = 5;
+                    var position = element.tooltipPosition();
+                    // ctx.fillText(labelString, position.x, position.y - (fontSize / 2) - padding);
+                    ctx.fillText(dataString, position.x, position.y + (fontSize / 2) - padding);
+                });
+            }
+        });
+    }
+};
+
+// Chart
+var myChart = "myChart";
+var chart = new Chart(myChart, {
+    type: 'doughnut',
+    data: {
+        labels: [
+            // "JavaScript", "CSS", "PHP", "HTML", "Laravel", "SQL", "SHELL", "情報system基礎知識（その他）"
+            <?php foreach($unique as $value):?>
+       <?php
+      echo $value;
+      ?>
+      <?php endforeach; ?>
+        ],
+        datasets: [{
+            label: "学習言語",
+            backgroundColor: [
+                // "#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"
+                <?php foreach($unique1 as $value):?>
+       <?php
+      echo $value;
+      ?>
+      <?php endforeach; ?>
+            ],
+            data: [
+                // 50, 50, 40, 52, 47, 46, 26, 20
+                <?php foreach($sum_learning_hour as $each_sum_learning_hour):?>
+                    <?php
+                    // 最初のkeyがsum(learning_hour)になってる。。。？
+                    echo $each_sum_learning_hour[0].",";
+                    // print_r($each_sum_learning_hour);
+                    ?>
+                <?php endforeach; ?>
+            ],
+        }]
+    },
+    options: {
+        // legendCallback: function(chart) {
+        //     // ここでHTML文字列を返します。
+        // }
+        responsive: true,
+        legend:{position:"bottom",
+        display: false
+        // labels:{filter: function(items) {
+        //     return items.text != 'JavaScript';
+        //     // return items.datasetIndex != 2;
+        //   }}
+        },
+        maintainAspectRatio: false,
+    },
+    plugins: [dataLabelPlugin]
+});
+
+                        </script>
                         <!-- </div> -->
                     </canvas>
                 </div>
-                <!-- <ul class="each_language">
-                    <li><span class="circle1"></span>JavaScript</li>
-                    <li><span class="circle2"></span>CSS</li>
-                    <li><span class="circle3"></span>PHP</li>
-                    <li><span class="circle4"></span>HTML</li>
-                    <li><span class="circle5"></span>Laravel</li>
-                    <li><span class="circle6"></span>SQL</li>
-                    <li><span class="circle7"></span>SHELL</li>
-                    <li><span class="circle8"></span>情報system基礎知識 (others)</li>
-                </ul> -->
+
                 <ul class="each_language">
                     <?php foreach($learning_languages as $learning_language):?>
                         <li><span class="circle<?php print($learning_language['language_color']) ?>"></span><?php print($learning_language['learning_language'])?></li>
-                        <?php endforeach; ?>         
+                        <?php endforeach; ?>     
                 </ul>
             </section>
             <section class="learning_contents_area">
@@ -137,9 +355,12 @@ require("./chart_db_fetch.php");
                     </canvas>
                 </div>
                 <ul class="each_content">
-                    <li><span class="circle1"></span>ドットインストール</li>
+                    <!-- <li><span class="circle1"></span>ドットインストール</li>
                     <li><span class="circle2"></span>N予備校</li>
-                    <li><span class="circle3"></span>POSSE課題</li>
+                    <li><span class="circle3"></span>POSSE課題</li> -->
+                    <?php foreach($learning_contents as $learning_content):?>
+                        <li><span class="circle<?php print($learning_content['content_color'])?>"></span><?php print($learning_content['learning_content'])?></li>
+                        <?php endforeach; ?>
                 </ul>
             </section>
         </div>
