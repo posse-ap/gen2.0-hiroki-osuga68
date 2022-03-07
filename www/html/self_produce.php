@@ -447,7 +447,9 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
         <div id="modalBg" class="modalBg"></div>
         <!-- モーダル内に書き込むコンテンツ部分 -->
         <div class="modalWrapper">
-            <form action="/" name="submitForm" class="submit__form">
+            
+            <!-- post処理 -->
+            <form action="add_data.php" method="post" name="submitForm" class="submit__form">
                 <!-- エリア内のflex適用部分 -->
                 <div class="modal_area">
                     <!-- 左側のコンテンツ -->
@@ -461,24 +463,24 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                         <div>
                             <div class="modal_small_title">学習コンテンツ（複数選択可）</div>
                             <ul class="check_contents">
-                                <li><label id="check_area1"><input type="checkbox" name="learning" value="N予備校"><span id="checkbox1" class="fas fa-check-circle check_style"></span>N予備校</label>
+                                <li><label id="check_area1"><input type="checkbox" name="learning_content" value="2"><span id="checkbox1" class="fas fa-check-circle check_style"></span>N予備校</label>
                                 </li>
-                                <li><label id="check_area2"><input type="checkbox" name="learning" value="ドットインストール"><span id="checkbox2" class="fas fa-check-circle check_style"></span>ドットインストール</label></li>
-                                <li><label id="check_area3"><input type="checkbox" name="learning" value="POSSE課題"><span id="checkbox3" class="fas fa-check-circle check_style"></span>POSSE課題</label></li>
+                                <li><label id="check_area2"><input type="checkbox" name="learning_content" value="1"><span id="checkbox2" class="fas fa-check-circle check_style"></span>ドットインストール</label></li>
+                                <li><label id="check_area3"><input type="checkbox" name="learning_content" value="3"><span id="checkbox3" class="fas fa-check-circle check_style"></span>POSSE課題</label></li>
                             </ul>
                         </div>
 
                         <div>
                             <div class="modal_small_title">学習言語（複数選択可）</div>
                             <ul class="check_contents">
-                                <li><label id="check_area4"><input type="checkbox" name="learning" value="HTML"><span id="checkbox4" class="fas fa-check-circle check_style"></span>HTML</label></li>
-                                <li><label id="check_area5"><input type="checkbox" name="learning" value="CSS"><span id="checkbox5" class="fas fa-check-circle check_style"></span>CSS</label></li>
-                                <li><label id="check_area6"><input type="checkbox" name="learning" value="JavaScript"><span id="checkbox6" class="fas fa-check-circle check_style"></span>JavaScript</label></li>
-                                <li><label id="check_area7"><input type="checkbox" name="learning" value="PHP"><span id="checkbox7" class="fas fa-check-circle check_style"></span>PHP</label></li>
-                                <li><label id="check_area8"><input type="checkbox" name="learning" value="Laravel"><span id="checkbox8" class="fas fa-check-circle check_style"></span>Laravel</label></li>
-                                <li><label id="check_area9"><input type="checkbox" name="learning" value="SQL"><span id="checkbox9" class="fas fa-check-circle check_style"></span>SQL</label></li>
-                                <li><label id="check_area10"><input type="checkbox" name="learning" value="SHELL"><span id="checkbox10" class="fas fa-check-circle check_style"></span>SHELL</label></li>
-                                <li><label id="check_area11"><input type="checkbox" name="learning" value="情報システム基礎知識"><span id="checkbox11" class="fas fa-check-circle check_style"></span>情報システム基礎知識（その他）</label></li>
+                                <li><label id="check_area4"><input type="checkbox" name="learning_language" value="4"><span id="checkbox4" class="fas fa-check-circle check_style"></span>HTML</label></li>
+                                <li><label id="check_area5"><input type="checkbox" name="learning_language" value="2"><span id="checkbox5" class="fas fa-check-circle check_style"></span>CSS</label></li>
+                                <li><label id="check_area6"><input type="checkbox" name="learning_language" value="1"><span id="checkbox6" class="fas fa-check-circle check_style"></span>JavaScript</label></li>
+                                <li><label id="check_area7"><input type="checkbox" name="learning_language" value="3"><span id="checkbox7" class="fas fa-check-circle check_style"></span>PHP</label></li>
+                                <li><label id="check_area8"><input type="checkbox" name="learning_language" value="5"><span id="checkbox8" class="fas fa-check-circle check_style"></span>Laravel</label></li>
+                                <li><label id="check_area9"><input type="checkbox" name="learning_language" value="6"><span id="checkbox9" class="fas fa-check-circle check_style"></span>SQL</label></li>
+                                <li><label id="check_area10"><input type="checkbox" name="learning_language" value="7"><span id="checkbox10" class="fas fa-check-circle check_style"></span>SHELL</label></li>
+                                <li><label id="check_area11"><input type="checkbox" name="learning_language" value="8"><span id="checkbox11" class="fas fa-check-circle check_style"></span>情報システム基礎知識（その他）</label></li>
                             </ul>
                         </div>
 
@@ -487,7 +489,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                     <div id="modal_2nd">
                         <div>
                             <p class="modal_small_title">学習時間</p>
-                            <input class="s_textbox" type="number" step="1" min="0" max="10">
+                            <input id="learning_hour" class="s_textbox" type="number" step="1" min="0" max="10">
                         </div>
 
                         <div>
@@ -496,7 +498,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                         </div>
 
                         <div class="confirm_twitter">
-                            <p><label id="check_area12"><input id="twitter_box" type="checkbox" name="learning"><span id="checkbox12" class="fas fa-check-circle check_style"></span>Twitterにシェアする</label></p>
+                            <p><label id="check_area12"><input id="twitter_box" type="checkbox"><span id="checkbox12" class="fas fa-check-circle check_style"></span>Twitterにシェアする</label></p>
                         </div>
                     </div>
 

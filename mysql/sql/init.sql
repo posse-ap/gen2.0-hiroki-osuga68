@@ -58,6 +58,9 @@ INSERT INTO learning_contents (learning_content, content_color) VALUES
 -- +------------------+--------------+------+-----+---------+----------------+
 
 -- learning_detailsテーブル
+-- ユーザーが入力してデータを更新していく役割を担う
+-- もしかしたらの課題・・・言語と教材が完全依存であり、ドットインストールのPHPを3時間やった、としか入力できない（PHP3時間のうちドットインストール1時間、N予備2時間のが便利ではある）
+-- そもそものモーダルの機能が、言語、教材1つ1つに対応して学習時間を入力できるわけではないから、スルーでもよさそう
 DROP TABLE IF EXISTS learning_details;
 CREATE TABLE learning_details (
 id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,

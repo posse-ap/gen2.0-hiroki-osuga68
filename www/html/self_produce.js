@@ -2,18 +2,6 @@
 var sample = document.getElementById('sample');
 var fp = flatpickr(sample);
 
-// let backgroundColor = ["#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"];
-// function Coloring (x){
-//   let colors = document.getElementsByClassName(`circle${x}`);
-//   colors = Array.from(colors) ;
-//   colors.forEach(newColor =>
-//   newColor.style.color = backgroundColor${x-1}
-//   );
-// };
-// for(x=1; backgroundColor.length; x++){
-//   Coloring(x);
-// };
-
 //modalの開閉
 (function () {
     const modalArea = document.getElementById('modalArea');
@@ -84,9 +72,16 @@ const formElements = document.forms.submitForm;
 
 formElements.addEventListener('submit', e =>{
   e.preventDefault();
-  Array.prototype.forEach.call(formElements.learning, function (checkbox) {
+  Array.prototype.forEach.call(formElements.learning_content, function (checkbox) {
     if(checkbox.checked === true){
-      console.log('学習内容：', checkbox.value);
+      console.log('学習内容id：', checkbox.value);
+      // console.log(checkbox);
+      // formElements.learningに含まれる要素すべてがforEachにより１つのcheckboxという引数に格納された
+    }
+  });
+  Array.prototype.forEach.call(formElements.learning_language, function (checkbox) {
+    if(checkbox.checked === true){
+      console.log('学習言語id：', checkbox.value);
       // console.log(checkbox);
       // formElements.learningに含まれる要素すべてがforEachにより１つのcheckboxという引数に格納された
     }
@@ -94,6 +89,8 @@ formElements.addEventListener('submit', e =>{
 })
 
 //ツイートエリアの作成
+
+let learningHour = document.getElementById('learning_hour');
 
 const button = document.getElementById('submit_info');
 let $url = 'https://twitter.com/intent/tweet?'
@@ -106,8 +103,14 @@ button.addEventListener('click', ()=>{
   document.getElementById('textarea').value
   $url += `text=${document.getElementById('textarea').value}`
   console.log($url);
+  // 送信した際に、学習日を記録
+  console.log('学習日：',sample.value);
+  // 送信した際に、学習時間を記録
+  console.log('学習時間：', learningHour.value);
   // location.href = $url;
   window.open($url,'_blank');
 
 }
 })
+
+
