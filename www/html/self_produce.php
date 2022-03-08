@@ -153,7 +153,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                                         //グラフのデータ
                                         //   課題・・・dataの中に、24番目（25日）に5(h)をいれたい
                                         data: [
-                                            <?php foreach ($initial_data as $value) : ?>
+                                            <?php foreach ($update_bargraph_data as $value) : ?>
                                                 <?php
                                                 echo $value . ',';
                                                 ?>
@@ -278,7 +278,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                                 data: {
                                     labels: [
                                         // "JavaScript", "CSS", "PHP", "HTML", "Laravel", "SQL", "SHELL", "情報system基礎知識（その他）"
-                                        <?php foreach ($unique as $value) : ?>
+                                        <?php foreach ($update_language_data as $value) : ?>
                                             <?php
                                             echo $value;
                                             ?>
@@ -288,7 +288,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                                         label: "学習言語",
                                         backgroundColor: [
                                             // "#0b03fc", "#1077a3", "#19b4c2", "#86c2db", "#b6a3d1", "#7250ab", "#4d0fb8", "#2f0b6e"
-                                            <?php foreach ($unique1 as $value) : ?>
+                                            <?php foreach ($update_language_color_data as $value) : ?>
                                                 <?php
                                                 echo $value;
                                                 ?>
@@ -380,7 +380,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                                 data: {
                                     labels: [
                                         // "ドットインストール", "N予備校", "POSSE課題"
-                                        <?php foreach ($unique2 as $value) : ?>
+                                        <?php foreach ($update_content_data as $value) : ?>
                                             <?php
                                             echo $value;
                                             ?>
@@ -390,7 +390,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                                         label: "Sample",
                                         backgroundColor: [
                                             // "#0b03fc", "#1077a3", "#19b4c2"
-                                            <?php foreach ($unique3 as $value) : ?>
+                                            <?php foreach ($update_content_color_data as $value) : ?>
                                                 <?php
                                                 echo $value;
                                                 ?>
@@ -457,7 +457,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
 
                         <div>
                             <div class="modal_small_title">学習日</div>
-                            <input id="sample" class="s_textbox flatpickr-input" type="text" readonly="readonly">
+                            <input id="sample" class="s_textbox flatpickr-input" type="text" name="learning_date" readonly="readonly">
                         </div>
 
                         <div>
@@ -489,7 +489,7 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
                     <div id="modal_2nd">
                         <div>
                             <p class="modal_small_title">学習時間</p>
-                            <input id="learning_hour" class="s_textbox" type="number" step="1" min="0" max="10">
+                            <input id="learning_hour" class="s_textbox" type="number" name="learning_hour" step="1" min="0" max="10">
                         </div>
 
                         <div>
@@ -518,13 +518,14 @@ $total_learning_hour = $stmt->fetch(PDO::FETCH_COLUMN) ?: 0;
 
                 </div>
 
-                <button id="submit_info" class="submit__button2" target="_blank">記録・投稿</button>
+                <!-- <button type="submit" name="submit" id="submit_info" class="submit__button2" target="_blank">記録・投稿</button> -->
+                <input type="submit" name="submit" id="submit_info" class="submit__button2" target="_blank" value="記録・投稿">
             </form>
         </div>
     </section>
-    <script src="chart1.js"></script>
-    <script src="chart2.js"></script>
-    <script src="chart3.js"></script>
+    <!-- <script src="chart1.js"></script> -->
+    <!-- <script src="chart2.js"></script> -->
+    <!-- <script src="chart3.js"></script> -->
     <script src="self_produce.js"></script>
 </body>
 

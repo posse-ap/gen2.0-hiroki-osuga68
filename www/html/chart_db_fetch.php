@@ -1,5 +1,6 @@
 <?php
 require("./db_connect.php");
+require("./add_data.php");
 // 1.棒グラフについての処理
 
 // 学習詳細テーブルのmonthデータを取得
@@ -15,14 +16,14 @@ $bargraph_data = $stmt->fetchAll();
 // +----+---------------------+---------------+----------------------+---------------------+
 
 // 31日分の空データを用意、後で指定場所を削除して新たなデータを追加する
-$initial_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+$update_bargraph_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 foreach ($bargraph_data as $each_bargraph_data) : ?>
     <?php
 
     $each_date = $each_bargraph_data['learning_date'];
     $each_date_day = date('d', strtotime($each_date));
-    array_splice($initial_data, $each_date_day - 1, 1, $each_bargraph_data['learning_hour']);
+    array_splice($update_bargraph_data, $each_date_day - 1, 1, $each_bargraph_data['learning_hour']);
     ?>
       <?php endforeach; ?>
 
@@ -85,8 +86,8 @@ foreach ($languages_data as $each_language_data) : ?>
   array_push($col_0, $each_language_data['learning_language']);
   array_push($col_1, $each_language_data['language_color']);
   // 配列の中の同じ文字列は、削除して重複を防ぐ
-  $unique = array_unique($col_0);
-  $unique1 = array_unique($col_1);
+  $update_language_data = array_unique($col_0);
+  $update_language_color_data = array_unique($col_1);
   ?>
   <?php endforeach; ?>
 
@@ -133,8 +134,8 @@ foreach ($languages_data as $each_language_data) : ?>
 
         array_push($col_2, $each_content_data['learning_content']);
         array_push($col_3, $each_content_data['content_color']);
-        $unique2 = array_unique($col_2);
-        $unique3 = array_unique($col_3);
+        $update_content_data = array_unique($col_2);
+        $update_content_color_data = array_unique($col_3);
 ?>
 <?php endforeach; ?>
 

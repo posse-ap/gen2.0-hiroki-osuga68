@@ -75,15 +75,23 @@ INSERT INTO learning_details (learning_date, learning_hour, learning_language_id
 ('2022/2/26', 4, 4, 2),
 ('2022/2/27', 6, 1, 1),
 ('2022/2/28', 7, 2, 2),
-('2022/1/30', 3, 3, 2);
-
-INSERT INTO learning_details (learning_date, learning_hour, learning_language_id, learning_content_id) VALUES
+('2022/1/30', 3, 3, 2),
 ('2022/3/1', 3, 3, 2),
 ('2022/3/3', 7, 1, 2),
-('2022/3/5', 5, 3, 1);
+('2022/3/5', 5, 3, 1),
+('2022/3/10', 5, 3, 3),
+('2022-3-12', 6, 5, 3);
 
-INSERT INTO learning_details (learning_date, learning_hour, learning_language_id, learning_content_id) VALUES
-('2022/3/10', 5, 3, 3);
+-- INSERT INTO learning_details (learning_date, learning_hour, learning_language_id, learning_content_id) VALUES
+-- ('2022/3/1', 3, 3, 2),
+-- ('2022/3/3', 7, 1, 2),
+-- ('2022/3/5', 5, 3, 1);
+
+-- INSERT INTO learning_details (learning_date, learning_hour, learning_language_id, learning_content_id) VALUES
+-- ('2022/3/10', 5, 3, 3);
+-- INSERT INTO learning_details (learning_date, learning_hour, learning_language_id, learning_content_id) VALUES
+-- ('2022-3-12', 6, 5, 3);
+
 -- +----------------------+----------+------+-----+---------+----------------+
 -- | Field                | Type     | Null | Key | Default | Extra          |
 -- +----------------------+----------+------+-----+---------+----------------+
